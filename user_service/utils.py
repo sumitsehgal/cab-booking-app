@@ -40,6 +40,8 @@ class Database(Singleton):
     def get_single_data(self, collection, key):
         db_collection = self.get_collection(collection)
         document = db_collection.find_one(key)
+        # Object ID not serialized by jsonify by flask
+        document.pop("_id", None)
         return document
 
     def get_multiple_data(self, collection, key):
@@ -59,4 +61,15 @@ class Database(Singleton):
     
     def get_all_records(self, collection):
         return self.database[collection].find({})
+    
+    def delete_single_data(self, collection, key):
+        db_collection = self.get_collection(collection)
+        result = db_collection.delete_one(key)
+        return result.deleted_count > 0
+    
+    def update_single_data(self, collection, key, data):
+        db_collection = self.get_collection(collection)
+        update_query = {"$set": data}
+        document = db_collection.update_one(key, update_query)
+        return document
     

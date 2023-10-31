@@ -1,17 +1,28 @@
 from utils import Singleton, Database
+from datetime import datetime
 
 
 class UsersMixin(object):
-    def add(self, first_name, middle_name, last_name, mobile_number,city):
-        user_data = {   
-                        'first_name' : first_name,
-                        'middle_name' : middle_name,
-                        'last_name' : last_name,
-                        'mobile_number': mobile_number,
-                        'city': city,
-                        'user_id': first_name + "-" + str(mobile_number) #trying to form the unique key
-                    }
-        Database.get_instance().insert_single_data(self.collection_name, user_data)
+    def add(self, user_data):
+        try:
+            # Basic Validation to Generate Unique User ID
+            if 'first_name' not in user_data or 'mobile_number' not in user_data:
+                raise ValueError("First Name and Mobile Number are required!")
+            
+            # Unique User ID
+            user_data['user_id'] = user_data['first_name'] + "-" + str(user_data['mobile_number'])
+            
+            # TODO: Need to Discuss to Move it to Class wise because Driver has onboarding_on etc
+            # Registered on Date
+            current_datetime = datetime.now()
+            user_data['registered_on'] = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            # Insert into Collection
+            inserted_id = Database.get_instance().insert_single_data(self.collection_name, user_data)
+            # User User ID
+            return user_data['user_id']
+        except Exception as e:
+            print(f"Error adding user: {e}")
+            return None
         
 
     def get_by_name(self, first_name, middle_name = None, last_name = None):
@@ -29,7 +40,31 @@ class UsersMixin(object):
     def get_all( self ):
         return Database.get_instance().get_all_records(self.collection_name)
 
-    # Need to implement delete user
+    def delete_by_id(self, user_id):
+        return Database.get_instance().delete_single_data(self.collection_name, {'user_id':user_id})
+    
+    def edit(self, user_id, user_data):
+        try:
+            # Basic Validation to Generate Unique User ID
+            if 'first_name' not in user_data or 'mobile_number' not in user_data:
+                raise ValueError("First Name and Mobile Number are required!")
+            
+            key = {'user_id': user_id}
+
+            # Remove None values from the update data
+            user_data = {k: v for k, v in user_data.items() if v is not None}  
+
+            # Last Edited
+            current_datetime = datetime.now()
+            user_data['last_edited_on'] = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            # Update into Collection
+            document = Database.get_instance().update_single_data(self.collection_name, key, user_data)
+            print("Document", document)
+            # User User ID
+            return user_data['user_id']
+        except Exception as e:
+            print(f"Error updating user: {e}")
+            return None
     # need to implement updating data
 
 
