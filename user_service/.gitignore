@@ -3,3 +3,6 @@
 
 # Ignore all __pycache__ folders and their contents
 __pycache__/
+
+# Ignore all .log files
+*.log
