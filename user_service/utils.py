@@ -73,3 +73,13 @@ class Database(Singleton):
         document = db_collection.update_one(key, update_query)
         return document
     
+    def count_documents(self, collection, key):
+        db_collection = self.get_collection(collection)
+        document = db_collection.count_documents(key)
+        return document
+    
+    def paginated_list(self, collection, key, offset, limit):
+        db_collection = self.get_collection(collection)
+        document = db_collection.find(key).skip(offset).limit(limit)
+        return document
+    

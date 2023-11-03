@@ -1,2 +1,4 @@
 INFO:root:Database already present, skipping creation of database
 INFO:root:Database not present, creating a database
+INFO:root:Database created
+INFO:root:Database created

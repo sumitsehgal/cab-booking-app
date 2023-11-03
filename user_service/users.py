@@ -3,6 +3,11 @@ from datetime import datetime
 
 
 class UsersMixin(object):
+
+    def get_list_with_pagination(self, key = {}, page = 1, limit = 10):
+        offset = (page - 1) * limit
+        return Database.get_instance().paginated_list(self.collection_name, key, offset, limit)
+        
     def add(self, user_data):
         try:
             # Basic Validation to Generate Unique User ID
@@ -59,13 +64,11 @@ class UsersMixin(object):
             user_data['last_edited_on'] = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
             # Update into Collection
             document = Database.get_instance().update_single_data(self.collection_name, key, user_data)
-            print("Document", document)
             # User User ID
             return user_data['user_id']
         except Exception as e:
             print(f"Error updating user: {e}")
             return None
-    # need to implement updating data
 
 
 class Users(UsersMixin, Singleton):
