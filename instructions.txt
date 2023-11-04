@@ -1,0 +1,6 @@
+Dependencies Installation which will added in code delpoy setup
+
+pip install shapely
+pip install pyproj
+pip install pymongo
+

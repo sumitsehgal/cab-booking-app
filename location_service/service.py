@@ -1,24 +1,18 @@
 from flask import Flask, jsonify, request, Blueprint
-from setup_boundary import BoundaryService
-from update_live_location import LiveLocationService
+from location import LiveLocation
 
 app = Flask("Location-Service")
 
 # Versioning API
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 
-@api_v1.route("/boundary/<locparm>", methods=["GET"])
-def get_boundary_points(locparm):
-    boundarypt = BoundaryService().geodesic_point_buffer(locparm)
-    return jsonify({'Status':"Ok", "Data": boundarypt})
-
-@api_v1.route("/boundary/<boundarypt>", methods=["GET"])
-def get_min_max_coordinates(boundarypt):
-    minmaxcoordinate = BoundaryService().minmaxcoordinates(boundarypt)
-    return jsonify({'Status':"Ok", "Data": minmaxcoordinate})
-
-@api_v1.route("/taxi/<locparm>", methods=["PATCH"])
-def update_loc(locparm):
+@api_v1.route("/taxi/update", methods=["POST"])
+def update_loc():
     request_data = request.get_json()
-    LiveLocationService.updliveloc(locparm)
+    LiveLocation.get_instance().update_location(request_data)
+    # TODO: Check what needs to be returned
     return jsonify({'Status':"Ok"})
+
+@api_v1.route("/taxi/<taxi_number>", methods=['GET'])
+def get_location(taxi_number):
+    LiveLocation.get_instance().get_by_number(taxi_number)

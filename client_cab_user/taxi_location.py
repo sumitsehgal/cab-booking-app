@@ -1,11 +1,11 @@
-from setup_boundary import BoundaryService
+from location_service.boundary import BoundaryHelper
 from user_service.users import Taxis
-from update_live_location import LiveLocationService
+from client_cab_user.update_live_location import LiveLocationService
 
 def main():
 
     # Instantiate BoundaryService to calculate the boundary
-    boundary_service = BoundaryService()
+    boundary_service = BoundaryHelper()
     ## Pass Latitude, Long and radius to get the Latitude and longitude coordinates along the given radius
     boundarypoints = boundary_service.geodesic_point_buffer(13.0798, 80.2846, 20.0)
 

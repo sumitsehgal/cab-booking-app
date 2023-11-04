@@ -15,6 +15,7 @@ class Singleton(object):
             cls.__instance = cls()
         return cls.__instance
 
+
 class Database(Singleton):
 
     def __init__(self):
@@ -63,3 +64,8 @@ class Database(Singleton):
         db_collection = self.get_collection(collection)
         document = db_collection.count_documents(key)
         return document
+    
+    def replace_one(self, collection, key, data):
+        db_collection = self.get_collection(collection)
+        document = db_collection.replaceOne(key,data, {'upsert':True})
+        return document.upserted_id
