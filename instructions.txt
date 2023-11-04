@@ -4,3 +4,6 @@ pip install shapely
 pip install pyproj
 pip install pymongo
 
+Ports used:
+8080  - Users Service
+8085  - Location Service

@@ -35,6 +35,8 @@ class Database(Singleton):
     def get_single_data(self, collection, key):
         db_collection = self.get_collection(collection)
         document = db_collection.find_one(key)
+        if document:
+            document.pop("_id", None)
         return document
 
     def get_multiple_data(self, collection, key):
@@ -67,5 +69,5 @@ class Database(Singleton):
     
     def replace_one(self, collection, key, data):
         db_collection = self.get_collection(collection)
-        document = db_collection.replaceOne(key,data, {'upsert':True})
+        document = db_collection.replace_one(key,data, upsert = True)
         return document.upserted_id

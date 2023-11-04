@@ -15,4 +15,11 @@ def update_loc():
 
 @api_v1.route("/taxi/<taxi_number>", methods=['GET'])
 def get_location(taxi_number):
-    LiveLocation.get_instance().get_by_number(taxi_number)
+    print("################Called###############")
+    return LiveLocation.get_instance().get_by_number(taxi_number)
+
+# Registering Blueprint
+app.register_blueprint(api_v1)
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=8085)

@@ -2,15 +2,15 @@ from pymongo import MongoClient
 import logging
 import functools
 
-from dotenv import load_dotenv
 import os
-
+#from dotenv import load_dotenv
 # Load Environment Variables
-load_dotenv()
+#load_dotenv()
+
 
 DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
+DB_NAME = os.getenv('DB_NAME') or 'taxi_fleet'
 
 class Singleton(object):
     __instance = None
@@ -40,8 +40,8 @@ class Database(Singleton):
     def get_single_data(self, collection, key):
         db_collection = self.get_collection(collection)
         document = db_collection.find_one(key)
-        # Object ID not serialized by jsonify by flask
-        document.pop("_id", None)
+        if document:# Object ID not serialized by jsonify by flask
+            document.pop("_id", None)
         return document
 
     def get_multiple_data(self, collection, key):
