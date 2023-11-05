@@ -46,13 +46,13 @@ def create_collections(database):
     # Create users collection
     print("Creating users")
     database['users']
-    Users.get_instance().add("Fahad", "Mustafa", "Madani", 9820775814, "Mumbai")
+    Users.get_instance().add("Fahad", "Mustafa", "Madani", "9820775814", "Mumbai")
     # Create drivers collection
     database['drivers']
-    Drivers.get_instance().add("Fahad-2", "Mustafa", "Madani", 9820775814, "Mumbai")
+    Drivers.get_instance().add("Fahad-2", "Mustafa", "Madani", "9820775814", "Mumbai")
     # Creating taxi collection
     database['taxis']
-    Taxis.get_instance().add("MH-02-AA-1234", "Luxury", "Mumbai", "Fahad-2")
+    Taxis.get_instance().add("MH-02-AA-1234", "Luxury", "Mumbai", "Fahad-2",2018, 4, "Available", "Diesel" )
 
     
 def main():

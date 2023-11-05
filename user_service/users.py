@@ -9,7 +9,7 @@ class UsersMixin(object):
         offset = (page - 1) * limit
         return Database.get_instance().paginated_list(self.collection_name, key, offset, limit)
         
-    def add(self, first_name, middle_name, last_name, mobile_number, city, emergency_contact = None):
+    def add(self, first_name, middle_name, last_name, mobile_number, city, emergency_contact = ''):
         try:
             # Basic Validation to Generate Unique User ID
             if first_name.strip() == '' or mobile_number.strip() == '':
@@ -136,7 +136,7 @@ class Taxis(UsersMixin, Singleton):
         return Database.get_instance().get_multiple_data(self.collection_name, query)
     
     def get_by_number( self, taxi_number):
-        query = {'taxi_number': taxi_number}
+        query = {'taxi_id': taxi_number}
         return Database.get_instance().get_single_data(self.collection_name, query)
     
     def get_by_id( self, taxi_id):

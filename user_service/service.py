@@ -2,6 +2,7 @@ from lib2to3.pgen2.driver import Driver
 from flask import Flask, jsonify, request, Blueprint
 from users import Taxis, Users, Drivers
 from json_encoder import CustomJSONEncoder 
+import json
 
 app = Flask("'User-Service")
 
