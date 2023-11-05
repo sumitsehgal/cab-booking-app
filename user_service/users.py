@@ -90,12 +90,12 @@ class Taxis(UsersMixin, Singleton):
         super().__init__()
         self.collection_name = 'taxis'
 
-    def add(self, taxi_number, taxi_type, city, driver = None ):
+    def add(self, json_data ):
         user_data = {
-                        'taxi_number' : taxi_number, # this should be unique
-                        'taxi_type' : taxi_type,
-                        'city' : city,
-                        'driver' : driver if driver else ''
+                        'taxi_id' : json_data.get('taxi_id'), # this should be unique
+                        'taxi_type' : json_data.get('taxi_type'),
+                        'city' : json_data.get('city'),
+                        'driver' : json_data.get('driver', '') 
                     }
         return Database.get_instance().insert_single_data(self.collection_name, user_data)
     
@@ -104,7 +104,7 @@ class Taxis(UsersMixin, Singleton):
         return Database.get_instance().get_multiple_data(self.collection_name, query)
     
     def get_by_number( self, taxi_number):
-        query = {'taxi_number': taxi_number}
+        query = {'taxi_id': taxi_number}
         return Database.get_instance().get_single_data(self.collection_name, query)
     
     def get_all(self):

@@ -1,6 +1,6 @@
 from lib2to3.pgen2.driver import Driver
 from flask import Flask, jsonify, request, Blueprint
-from users import Users, Drivers
+from users import Users, Drivers, Taxis
 import json
 
 app = Flask("'User-Service")
@@ -80,6 +80,19 @@ def update_driver(driver_id):
     request_data = request.get_json()
     Drivers.get_instance().edit(driver_id, request_data)
     return jsonify({'Status':"Ok"})
+
+@api_v1.route("/taxi", methods=["GET"])
+def get_taxis():
+    return jsonify(Taxis.get_instance().get_all())
+
+
+@api_v1.route("/taxi", methods=["POST"])
+def add_taxi():
+    request_data = request.get_json()
+    is_taxi_added = Taxis.get_instance().add(request_data)
+    if is_taxi_added is None:
+            return jsonify({'Status':'Error', 'Message': "Problem in adding Taxi"})
+    return jsonify({'Status':'Ok'})
 
 
 # Registering Blueprint

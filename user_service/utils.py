@@ -59,8 +59,14 @@ class Database(Singleton):
         result = db_collection.insert_many(data)
         return result.inserted_ids
     
+    def _remove_internal_data(self, document):
+        if document:
+            return document.pop("_id", None)
+        else:
+            return document
+
     def get_all_records(self, collection):
-        return self.database[collection].find({})
+        return [ self._remove_internal_data(rec) for rec in self.database[collection].find({}) ]
     
     def delete_single_data(self, collection, key):
         db_collection = self.get_collection(collection)
