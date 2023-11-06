@@ -61,7 +61,8 @@ class Database(Singleton):
     
     def _remove_internal_data(self, document):
         if document:
-            return document.pop("_id", None)
+            document.pop("_id", None)
+            return document
         else:
             return document
 
