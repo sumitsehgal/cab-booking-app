@@ -1,5 +1,6 @@
 from utils import Singleton, Database
 from boundary import BoundaryHelper
+import requests
 
 class LiveLocation(Singleton):
 
@@ -7,14 +8,22 @@ class LiveLocation(Singleton):
         super().__init__()
         self.collection_name = 'live_location'
         self.boundaryHelper = BoundaryHelper(13.0798, 80.2846, 20.0)
+        self.get_all_taxis()
+
+    def get_all_taxis(self):
+        req_url = 'http://localhost:8080/api/v1/taxi'
+        req_response = requests.get(req_url,timeout=120)
+        all_taxis = req_response.json()
+        self.taxi_cache = { doc['taxi_number']: doc for doc in all_taxis['Data'] }
+
 
     def update_location(self, json_data ):
         lat = json_data.get('latitude', None)
         lon = json_data.get('longitude', None)
-        taxi_id = json_data.get('taxi_id', None)
-        if self.boundaryHelper.is_in_service_boundary(lat, lon) and taxi_id:
-            key = { 'taxi_id' : taxi_id }
-            loc_data = { 'latitude': lat, 'longitude' : lon }
+        taxi_number = json_data.get('taxi_number', None)
+        if taxi_number in self.taxi_cache:
+            key = { 'taxi_number' : taxi_number }
+            update_data = { 'location': { 'type': "Point", 'coordinates': [lat, lon] } }
             return Database.get_instance().replace_one(self.collection_name, key, json_data)
     
     def get_count_key(self, key):
@@ -22,8 +31,11 @@ class LiveLocation(Singleton):
         return count_key
     
     def get_by_number( self, taxi_number):
-        query = {'taxi_id': taxi_number}
+        query = {'taxi_number': taxi_number}
         return Database.get_instance().get_single_data(self.collection_name, query)
+    
+    def get_boundary_coordinates(self):
+        return self.boundaryHelper.min_max_coordinates()
 
 def main():
     # Checkling SingleTon for each

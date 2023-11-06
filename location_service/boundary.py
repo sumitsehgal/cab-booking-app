@@ -40,6 +40,13 @@ class BoundaryHelper:
         else:
             return False
         
+    def min_max_coordinates(self):
+        return { 'min_latitude' : self.min_lat, 
+                 'max_latitude' : self.max_lat,
+                 'min_longitude' : self.min_lon, 
+                 'max_longitude': self.max_lon
+                }
+        
 def main():
     import geocoder
     my_location = geocoder.ip('me')
