@@ -86,7 +86,7 @@ def mock_live_update():
                     print("")
                     is_complete = True
 
-            #time.sleep(120) # sleeping for 2 mins
+            time.sleep(120) # sleeping for 2 mins
 def main():
     #initialize_taxi_location()
     mock_live_update()
