@@ -12,7 +12,7 @@ class UsersMixin(object):
     def add(self, first_name, middle_name, last_name, mobile_number, city, emergency_contact = ''):
         try:
             # Basic Validation to Generate Unique User ID
-            if first_name.strip() == '' or mobile_number.strip() == '':
+            if first_name.strip() == '' or mobile_number == '':
                 raise ValueError("First Name and Mobile Number are required!")
             
             # Registered on Date

@@ -10,13 +10,9 @@ app = Flask("'User-Service")
 # Versioning API
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 
-
+# List of Users
 @api_v1.route("/user", methods=["GET"])
 def list_user():
-    # page = int(request.args.get('page', 1))
-    # limit = int(request.args.get('limit', 15))
-    # users = Users().get_list_with_pagination(page=page, limit=limit)
-    # users = json.dumps(users, default=str)
     userLists = list(Users().get_instance().get_all())
     response_data = {'Status':"Ok", "Data": userLists}
 
