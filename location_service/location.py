@@ -9,6 +9,8 @@ class LiveLocation(Singleton):
         self.collection_name = 'live_location'
         self.boundaryHelper = BoundaryHelper(13.0798, 80.2846, 20.0)
         self.get_all_taxis()
+        self.index_created = False # Index creation is indempotent operation, so calling it multiple times is no-op, but for safety will call it once the first insert happen
+
 
     def get_all_taxis(self):
         req_url = 'http://localhost:8080/api/v1/taxi'
@@ -24,7 +26,9 @@ class LiveLocation(Singleton):
         if taxi_number in self.taxi_cache:
             key = { 'taxi_number' : taxi_number }
             update_data = { 'location': { 'type': "Point", 'coordinates': [lat, lon] } }
-            return Database.get_instance().replace_one(self.collection_name, key, json_data)
+            status = Database.get_instance().replace_one(self.collection_name, key, json_data)
+            if not self.index_created:
+                Database.get_instance().create_geo_index(self.collection_name, 'location' )
     
     def get_count_key(self, key):
         count_key = Database.get_instance().count_documents(self.collection_name,key)

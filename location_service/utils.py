@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, GEOSPHERE
 import logging
 import functools
 
@@ -71,3 +71,7 @@ class Database(Singleton):
         db_collection = self.get_collection(collection)
         document = db_collection.replace_one(key,data, upsert = True)
         return document.upserted_id
+    
+    def create_geo_index(self, collection, column_name):
+        db_collection = self.get_collection(collection)
+        db_collection.create_index([(column_name, GEOSPHERE)])
