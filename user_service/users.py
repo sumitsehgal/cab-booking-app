@@ -101,11 +101,11 @@ class Taxis(UsersMixin, Singleton):
         super().__init__()
         self.collection_name = 'taxis'
 
-    def add(self, taxi_number, taxi_type, city, driver = None, year_of_manufacturing = None, seating_capacity = None, availability_status = 'Available', fuel_type='Petrol' ):
+    def add(self, taxi_number, taxi_type, city, driver = '', year_of_manufacturing = '', seating_capacity = '', availability_status = 'Available', fuel_type='Petrol' ):
 
         try:
              # Basic Validation to Generate Unique User ID
-            if taxi_number.strip() == '' or taxi_type.strip() == '':
+            if taxi_number == '' or taxi_type == '':
                 raise ValueError("Taxi Number and Taxi Type are required!")
             
             # Registered on Date
@@ -121,12 +121,11 @@ class Taxis(UsersMixin, Singleton):
                             'availability_status': availability_status,
                             'fuel_type': fuel_type,
                             'registered_on': current_datetime.strftime('%Y-%m-%d %H:%M:%S'),
-                            'taxi_id': taxi_type+'-'+taxi_number
                         }
             # Insert into Collection
             inserted_id = Database.get_instance().insert_single_data(self.collection_name, user_data)
             # User User ID
-            return user_data['taxi_id']
+            return user_data['taxi_number']
         except Exception as e:
             print(f"Error adding user: {e}")
             return None
@@ -136,23 +135,19 @@ class Taxis(UsersMixin, Singleton):
         return Database.get_instance().get_multiple_data(self.collection_name, query)
     
     def get_by_number( self, taxi_number):
-        query = {'taxi_id': taxi_number}
-        return Database.get_instance().get_single_data(self.collection_name, query)
-    
-    def get_by_id( self, taxi_id):
-        query = {'taxi_id': taxi_id}
+        query = {'taxi_number': taxi_number}
         return Database.get_instance().get_single_data(self.collection_name, query)
     
     def get_all(self):
         return Database.get_instance().get_all_records(self.collection_name)
     
-    def edit(self, taxi_id, taxi_data):
+    def edit(self, taxi_number, taxi_data):
         try:
             # Basic Validation to Generate Unique Taxi ID
-            if 'taxi_number' not in taxi_data or 'taxi_type' not in taxi_data:
+            if 'taxi_type' not in taxi_data:
                 raise ValueError("Taxi Number and Taxi Type are required!")
             
-            key = {'taxi_id': taxi_id}
+            key = {'taxi_number': taxi_number}
             selected_cols = ['taxi_number', 'taxi_type', 'city', 'driver', 'year_of_manufacturing', 'seating_capacity', 'availability_status', 'fuel_type', 'last_edited_on']
 
              # Last Edited
@@ -165,13 +160,13 @@ class Taxis(UsersMixin, Singleton):
             # Update into Collection
             document = Database.get_instance().update_single_data(self.collection_name, key, taxi_data)
             # Taxi ID
-            return taxi_id
+            return taxi_number
         except Exception as e:
             print(f"Error updating taxi: {e}")
             return None
         
-    def delete_by_id(self, taxi_id):
-        return Database.get_instance().delete_single_data(self.collection_name, {'taxi_id':taxi_id})
+    def delete_by_id(self, taxi_number):
+        return Database.get_instance().delete_single_data(self.collection_name, {'taxi_number':taxi_number})
     
 
 

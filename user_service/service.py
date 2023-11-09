@@ -71,12 +71,12 @@ def add_driver():
     if request.method == 'POST':
         request_data = request.get_json()
         isDriverAdded = Drivers.get_instance().add(
-            first_name=request_data['first_name'],
-            last_name=request_data['last_name'],
-            middle_name=request_data['middle_name'],
-            mobile_number=request_data['mobile_number'],
-            city=request_data['city'],
-            emergency_contact=request_data['emergency_contact'],
+            first_name=request_data.get('first_name'),
+            last_name=request_data.get('last_name'),
+            middle_name=request_data.get('middle_name'),
+            mobile_number=request_data.get('mobile_number'),
+            city=request_data.get('city'),
+            emergency_contact=request_data.get('emergency_contact'),
         )
         
         if isDriverAdded is None:
@@ -96,9 +96,9 @@ def update_driver(driver_id):
     return jsonify({'Status':"Ok"})
 
 
-@api_v1.route("/taxi/<taxi_id>", methods=["GET"])
-def get_taxi(taxi_id):
-    taxi = Taxis().get_instance().get_by_id(taxi_id)
+@api_v1.route("/taxi/<taxi_number>", methods=["GET"])
+def get_taxi(taxi_number):
+    taxi = Taxis().get_instance().get_by_number(taxi_number)
     return jsonify({'Status':"Ok", "Data": taxi})
 
 @api_v1.route("/taxi", methods=["POST"])
@@ -120,16 +120,16 @@ def add_taxi():
             return jsonify({'Status':'Error', 'Message': "There is problem while registering"})
     return jsonify({'Status':'Ok', 'TaxiId': str(isTaxiAdded), 'taxi_number': request_data['taxi_number']})
 
-@api_v1.route("/taxi/<taxi_id>", methods=["PATCH"])
-def update_taxi(taxi_id):
+@api_v1.route("/taxi/<taxi_number>", methods=["PATCH"])
+def update_taxi(taxi_number):
     request_data = request.get_json()
-    Taxis.get_instance().edit(taxi_id, request_data)
+    Taxis.get_instance().edit(taxi_number, request_data)
     return jsonify({'Status': "Ok"})
 
 
-@api_v1.route("/taxi/<taxi_id>", methods=["DELETE"])
-def delete_taxi(taxi_id):
-    Taxis.get_instance().delete_by_id(taxi_id=taxi_id)
+@api_v1.route("/taxi/<taxi_number>", methods=["DELETE"])
+def delete_taxi(taxi_number):
+    Taxis.get_instance().delete_by_id(taxi_number=taxi_number)
     return jsonify({'Status':"Ok"})
 
 @api_v1.route("/taxi", methods=["GET"])

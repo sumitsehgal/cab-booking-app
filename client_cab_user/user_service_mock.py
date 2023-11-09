@@ -3,7 +3,7 @@ import json
 import requests
 
 User = namedtuple( 'User', [ 'first_name', 'middle_name', 'last_name', 'mobile', 'city'])
-Taxi = namedtuple("Taxi", ['taxi_id', 'taxi_type', 'city', 'driver'])
+Taxi = namedtuple("Taxi", ['taxi_number', 'taxi_type', 'city', 'driver'])
 
 CITY = "Mumbai"
 
@@ -99,6 +99,7 @@ def mock_driver_creation():
     req_url = BASE_HTTP_URL + "driver"
     # Since the collection for driver is same, using the same
     for user in DriverList:
+        print("user", get_user_json(user))
         response = requests.post(req_url, json = get_user_json(user))
         print( response )
         print(response.json())
@@ -159,7 +160,7 @@ TaxiList = [
 
 def get_taxi_json(taxi_data):
     taxi_json = {
-        'taxi_id' : taxi_data.taxi_id,
+        'taxi_number' : taxi_data.taxi_number,
         'taxi_type' : taxi_data.taxi_type,
         'city' : taxi_data.city,
         'driver_id' : taxi_data.driver
