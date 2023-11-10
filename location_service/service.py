@@ -15,13 +15,19 @@ def update_loc():
 
 @api_v1.route("/taxi/<taxi_number>", methods=['GET'])
 def get_location(taxi_number):
-    print("################Called###############")
     return jsonify(LiveLocation.get_instance().get_by_number(taxi_number))
 
 # Added for demo purpose only
 @api_v1.route("/boundary/cordinates", methods=['GET'])
 def get_boundary_cordionates():
     return jsonify(LiveLocation.get_instance().get_boundary_coordinates())
+
+
+@api_v1.route("/find/taxi", methods=["POST"])
+def get_nearby_taxis():
+    request_data = request.get_json()
+    return jsonify(LiveLocation.get_instance().get_nearby_taxis(request_data))
+
 
 # Registering Blueprint
 app.register_blueprint(api_v1)
