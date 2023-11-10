@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, GEOSPHERE
 import logging
 import functools
 
@@ -24,8 +24,7 @@ class Singleton(object):
 class Database(Singleton):
 
     def __init__(self):
-        #db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
-        db_client = MongoClient("mongodb+srv://fahad_madani:UbuYtTGkByg1TKjN@learn-and-explore.era9d9u.mongodb.net/?retryWrites=true&w=majority")
+        db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
         db_names = db_client.list_database_names()
         if DB_NAME in db_names:
             logging.info("Database not present, creating a database")
@@ -94,3 +93,12 @@ class Database(Singleton):
         document = db_collection.find(key).skip(offset).limit(limit)
         return document
     
+    def replace_one(self, collection, key, data):
+        db_collection = self.get_collection(collection)
+        document = db_collection.replace_one(key,data, upsert = True)
+        return document.upserted_id
+    
+    def create_geo_index(self, collection, column_name):
+        db_collection = self.get_collection(collection)
+        db_collection.create_index([(column_name, GEOSPHERE)])
+        #db_collection.create_index([(column_name, '2D')])
