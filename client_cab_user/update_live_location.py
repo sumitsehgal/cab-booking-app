@@ -47,7 +47,7 @@ def update_and_send(taxi):
     taxi_loc = requests.get(req_url).json()
     curr_lat = taxi_loc['latitude']
     curr_lon = taxi_loc['longitude']
-    distance = random.choice([0.5, 1, 1.5, 2])
+    distance = 0.5
     bearing = random.choice([85, 86, 87, 88, 89,90])
     getpointatdistance=GetPointAtDistance()
     new_lat, new_lon = getpointatdistance.get_point_at_distance(curr_lat, curr_lon, distance, bearing)
@@ -63,6 +63,7 @@ def update_and_send(taxi):
 def mock_live_update():
     print("Starting Live Updates")
     taxis = get_all_taxis()
+    print("Number of Taxis:{0}".format(len(taxis)))
     boundary = get_boundary_cordinates()
     min_lat = boundary['min_latitude']
     max_lat = boundary['max_latitude']
@@ -83,12 +84,11 @@ def mock_live_update():
                     if not f.done():
                         is_all_done = False
                 if is_all_done:
-                    print("")
                     is_complete = True
 
             time.sleep(120) # sleeping for 2 mins
 def main():
-    #initialize_taxi_location()
+    initialize_taxi_location()
     mock_live_update()
 
 if __name__ == "__main__":
