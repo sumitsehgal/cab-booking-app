@@ -1,5 +1,9 @@
-import select
-from utils import Singleton, Database
+import os
+import sys
+# Adding path for now, in produciton it will be part of system setup
+sys.path.append(os.getcwd())
+sys.path.append(os.pardir)
+from common_utils.utils import Database, Singleton
 from datetime import datetime
 
 

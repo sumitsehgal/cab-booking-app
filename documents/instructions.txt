@@ -7,4 +7,5 @@ pip install pymongo
 Ports used:
 8080  - Users Service
 8085  - Location Service
+8090  - Booking Service
 
