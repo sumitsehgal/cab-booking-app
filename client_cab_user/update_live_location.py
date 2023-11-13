@@ -87,9 +87,22 @@ def mock_live_update():
                     is_complete = True
 
             time.sleep(120) # sleeping for 2 mins
+
+
+def mock_taxi_free_booked():
+    req_url = 'http://localhost:8085/api/v1/taxi/booked'
+    req_data = {'taxi_number' : 'Taxi-138'}
+    req_response = requests.post(req_url, json = req_data)
+    print(req_response.json())
+    req_url = 'http://localhost:8085/api/v1/taxi/free'
+    req_response = requests.post(req_url, json = req_data)
+    print(req_response.json())
+
+
 def main():
-    initialize_taxi_location()
-    mock_live_update()
+    #initialize_taxi_location()
+    #mock_live_update()
+    mock_taxi_free_booked()
 
 if __name__ == "__main__":
     main()

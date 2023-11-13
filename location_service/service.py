@@ -28,6 +28,16 @@ def get_nearby_taxis():
     request_data = request.get_json()
     return jsonify(LiveLocation.get_instance().get_nearby_taxis(request_data))
 
+@api_v1.route("/taxi/free", methods= ["POST"])
+def mark_taxi_free():
+    request_data = request.get_json()
+    return jsonify(LiveLocation.get_instance().mark_taxi_as_free(request_data))
+
+@api_v1.route("/taxi/booked", methods=["POST"])
+def mark_taxi_booked():
+    request_data = request.get_json()
+    return jsonify(LiveLocation.get_instance().mark_taxi_as_booked(request_data))
+
 
 # Registering Blueprint
 app.register_blueprint(api_v1)
