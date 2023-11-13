@@ -76,26 +76,24 @@ class BookingModel(Singleton):
     def _send_notofication_to_driver(self, booking_key):
         pass
 
+    def get_time_to_reach_user(self, user_location, cab_location):
+        logging.info("Computing time to reach from {0}-{1}".format(user_location, cab_location))
+        return 2
 
     def get_nearby_taxis(self, request_data):
         user_location = request_data.get(RequestConstant.User_Location)
-        destination = request_data.get(RequestConstant.Destination)
         user_id = request_data.get(RequestConstant.User_Id)
-        logging.info("{}-{}-{}".format(user_id,user_location,destination))
+        logging.info("{}-{}".format(user_id,user_location))
         documents = self._query_location_service(user_location)
         cabs = []
         cabs_location = []
         for document in documents:
-            cabs.append(document.get('taxi_number'))
+            taxi_data = document['location']['coordinates']
+            taxi_data.append(self.get_time_to_reach_user(user_location, document['location']['coordinates']))
             cabs_location.append(document['location']['coordinates'])
-        if cabs:
-            logging.info("Found {0} cabs nearby for {1}".format(len(cabs), user_location))
-            booking_data = self._get_new_booking_document(user_id=user_id, user_location=user_location, destination=destination,taxis=cabs)
-            Database.get_instance().insert_single_data(self.collection_name, booking_data)
-            return { 'booking_id' : booking_data['booking_id'], 'user_id' : user_id, 'taxis_location' : cabs_location, 'destination':destination}
-        else:
-            logging.warn("No cabs found")
-            return {}
+        
+        logging.info("Found {0} cabs nearby for {1}".format(len(cabs), user_location))
+        return { 'user_id' : user_id, 'taxis_location' : cabs_location}
 
     def confirm_booking(self, request_data):
         booking_id = request_data.get(RequestConstant.Booking_Id)
