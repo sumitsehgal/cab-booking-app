@@ -15,7 +15,7 @@ class LiveLocation(Singleton):
     def __init__( self ):
         super().__init__()
         self.collection_name = 'live_location'
-        self.boundaryHelper = BoundaryHelper(13.0798, 80.2846, 20.0)
+        self.boundaryHelper = BoundaryHelper(21.1458, 79.0882, 20.0)
         self.get_all_taxis()
         self.index_created = False # Index creation is indempotent operation, so calling it multiple times is no-op, but for safety will call it once the first insert happen
 
@@ -81,11 +81,11 @@ class LiveLocation(Singleton):
 
 def main():
     # Checkling SingleTon for each
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':12.931075969682226, 'longitude': 80.4564266751934}))
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
     print(LiveLocation.get_instance().mark_taxi_as_booked({'taxi_number' : 'Taxi-138'}))
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':12.931075969682226, 'longitude': 80.4564266751934}))
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
     print(LiveLocation.get_instance().mark_taxi_as_free({'taxi_number' : 'Taxi-138'}))
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':12.931075969682226, 'longitude': 80.4564266751934}))
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
 
 if __name__ == "__main__":
     main()
