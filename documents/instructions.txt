@@ -1,4 +1,4 @@
-Dependencies Installation which will added in code delpoy setup
+Dependencies Installation which will added in code deploy setup
 
 pip install shapely
 pip install pyproj
@@ -8,4 +8,5 @@ Ports used:
 8080  - Users Service
 8085  - Location Service
 8090  - Booking Service
+8095  - Trip Service
 

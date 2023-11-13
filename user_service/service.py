@@ -28,7 +28,6 @@ def get_user(user_id):
 def add_user():
     if request.method == 'POST':
         request_data = request.get_json()
-        print(request_data)
         isUserAdded = Users.get_instance().add(
             first_name=request_data.get('first_name'),
             last_name=request_data.get('last_name'),

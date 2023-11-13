@@ -3,9 +3,9 @@ import logging
 import functools
 
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 # Load Environment Variables
-#load_dotenv()
+load_dotenv()
 
 
 DB_HOST = os.getenv('DB_HOST')

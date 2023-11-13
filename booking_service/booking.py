@@ -128,4 +128,20 @@ class BookingModel(Singleton):
         else:
             logging.warn("Cancel booking request received without booking id.")
             return { 'Status' : 'Booking Deleted'}
+        
+    def get_booking_by_id(self, request_data):
+        booking_id = request_data.get(RequestConstant.Booking_Id)
+        if booking_id is None:
+            return {'Status': False, 'Message': 'Booking ID not Exists'}
+        get_key = self._get_key(booking_id)
+        booking = Database.get_instance().get_single_data(self.collection_name, get_key)
+        if booking is None:
+            return {'Status': False, 'Message': 'Booking not Exists'}
+        
+        return {
+            'Status': True,
+            'Data': booking
+        }
+
+
 

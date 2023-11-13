@@ -28,6 +28,11 @@ def cancel():
     request_data = request.get_json()
     return jsonify(BookingModel.get_instance().cancel_booking(request_data))
 
+@api_v1.route(f"/booking/<booking_id>", methods=['GET'])
+def get_booking(booking_id):
+    return jsonify(BookingModel.get_instance().get_booking_by_id({'booking_id': booking_id}))
+
+
 # Registering Blueprint
 app.register_blueprint(api_v1)
 
