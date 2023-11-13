@@ -49,7 +49,7 @@ class BookingModel(Singleton):
             'user_id' : user_id,
             'user_location' : { 'type' : 'Point', 'coordinates' : [user_location[0], user_location[1]]},
             'destination' :{ 'type' : 'Point', 'coordinates' : [destination[0], destination[1]]},
-            'status' : BookingStatus.New,
+            'status' : BookingStatus.User_Confirmed,
             'taxis' : taxis,
             'taxi_alloted' :[],
         }
@@ -73,7 +73,7 @@ class BookingModel(Singleton):
             logging.error("Failed to get nearby taxi: {}".format(req_response.status_code))
             return []
         
-    def _send_notofication_to_driver(self, booking_key):
+    def _send_notofication_to_driver(self, booking_id, cabs):
         pass
 
     def get_time_to_reach_user(self, user_location, cab_location):
@@ -85,36 +85,40 @@ class BookingModel(Singleton):
         user_id = request_data.get(RequestConstant.User_Id)
         logging.info("{}-{}".format(user_id,user_location))
         documents = self._query_location_service(user_location)
-        cabs = []
         cabs_location = []
         for document in documents:
             taxi_data = document['location']['coordinates']
             taxi_data.append(self.get_time_to_reach_user(user_location, document['location']['coordinates']))
             cabs_location.append(document['location']['coordinates'])
         
-        logging.info("Found {0} cabs nearby for {1}".format(len(cabs), user_location))
+        logging.info("Found {0} cabs nearby for {1}".format(len(cabs_location), user_location))
         return { 'user_id' : user_id, 'taxis_location' : cabs_location}
 
     def confirm_booking(self, request_data):
-        booking_id = request_data.get(RequestConstant.Booking_Id)
-        if booking_id:
-            logging.info("Confirming booking for {0}".format(booking_id))
-            update_data = self._get_status_update(BookingStatus.User_Confirmed)
+        user_location = request_data.get(RequestConstant.User_Location)
+        destination = request_data.get(RequestConstant.Destination)
+        user_id = request_data.get(RequestConstant.User_Id)
+        # Querying the cab location again
+        documents = self._query_location_service(user_location)
+        cabs = []
+        for document in documents:
+            cabs.append(document['taxi_number'])
+
+        booking_id = user_id + datetime.datetime.now().strftime("%H-%M-%S")
+        booking_data = self._get_new_booking_document(user_id, user_location, destination, cabs)
+        Database.get_instance().insert_single_data(self.collection_name, booking_data)
+        self._send_notofication_to_driver(booking_id, cabs)
+        time.sleep(180) # Wait for 3 minutes
+        document = Database.get_instance().get_single_data(self.collection_name, {'booking_id' : booking_id})
+        if document and document['status'] == BookingStatus.Confirm:
+            return {'booking_id' : booking_id, 'status' : BookingStatus.Confirm, 'taxi' : document['taxi_alloted'] }
+        else:
+                # After 3 mins since no cab was found setting status to No_cabs
+            update_data = self._get_status_update(BookingStatus.No_Cabs)
             update_key = self._get_key(booking_id)
             Database.get_instance().update_single_data(self.collection_name, update_key, update_data)
-            self._send_notofication_to_driver(update_key)
-            time.sleep(180) # Wait for 3 minutes
-            document = Database.get_instance().get_single_data(self.collection_name, {'booking_id' : booking_id})
-            if document and document['status'] == BookingStatus.Confirm:
-                return {'booking_id' : booking_id, 'status' : BookingStatus.Confirm, 'taxi' : document['taxi_alloted'] }
-            else:
-                # After 3 mins since no cab was found setting status to No_cabs
-                update_data = self._get_status_update(BookingStatus.No_Cabs)
-                Database.get_instance().update_single_data(self.collection_name, update_key, update_data)
-                return {'booking_id' : booking_id, 'status' : BookingStatus.No_Cabs, 'taxi' : []}
-        else:
-            logging.warn("Booking request received without booking id.")
-            return {}
+            return {'booking_id' : booking_id, 'status' : BookingStatus.No_Cabs, 'taxi' : []}
+
 
     def cancel_booking(self, request_data):
         booking_id = request_data.get(RequestConstant.Booking_Id)

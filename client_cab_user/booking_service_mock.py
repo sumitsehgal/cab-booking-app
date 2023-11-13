@@ -8,10 +8,10 @@ def get_all_cabs():
     response = requests.post(req_url, json = { 'user_id' : 'Sumit-7988929968','user_location' :[12.931075969682226, 80.4564266751934]})
     return response.json()['taxis_location']
 
-def confirm_booking(booking_id):
+def confirm_booking():
     req_url = BASE_HTTP_URL + "booking/confirm"
-    response = requests.post(req_url, json = {'booking_id': booking_id})
-    print(response)
+    response = requests.post(req_url, json = {'user_id' : 'Fahad-9820775814', 'user_location' : [12.931075969682226, 80.4564266751934], 'destination' : [12.899520179224464, 80.4531823786293]})
+    print(response.status_code, response.json())
 
 def cancel_booking(booking_id):
     req_url = BASE_HTTP_URL + "booking/cancel"
@@ -21,7 +21,7 @@ def cancel_booking(booking_id):
 def main():
     taxis = get_all_cabs()
     print(taxis)
-    #confirm_booking(booking_id)
+    confirm_booking()
     #cancel_booking(booking_id)
     #confirm_booking('Sumit-7988929968-11:40:34')
     #cancel_booking("Fahad-9820775814-17:44:23")

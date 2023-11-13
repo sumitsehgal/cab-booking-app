@@ -26,7 +26,7 @@ class Database(Singleton):
     def __init__(self):
         db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
         db_names = db_client.list_database_names()
-        if DB_NAME in db_names:
+        if DB_NAME not in db_names:
             logging.info("Database not present, creating a database")
         else:
             db_client[DB_NAME]
