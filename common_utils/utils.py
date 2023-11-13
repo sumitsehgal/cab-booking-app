@@ -1,4 +1,4 @@
-from pymongo import MongoClient, GEOSPHERE
+from pymongo import MongoClient, GEOSPHERE, ASCENDING
 import logging
 import functools
 
@@ -102,3 +102,13 @@ class Database(Singleton):
         db_collection = self.get_collection(collection)
         db_collection.create_index([(column_name, GEOSPHERE)])
         #db_collection.create_index([(column_name, '2D')])
+
+    def check_index_exists(self, collection, index_name):
+        db_collection = self.get_collection(collection)
+        index_info = db_collection.index_information()
+        return index_name in index_info
+
+    def create_unique_index(self, collection, column_name):
+        db_collection = self.get_collection(collection)
+        if self.check_index_exists(collection, column_name) is False:
+            db_collection.create_index([(column_name, ASCENDING)], unique=True)

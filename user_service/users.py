@@ -13,9 +13,12 @@ class UsersMixin(object):
         offset = (page - 1) * limit
         return Database.get_instance().paginated_list(self.collection_name, key, offset, limit)
         
-    def add(self, first_name, middle_name, last_name, mobile_number, city, emergency_contact = ''):
+    def add(self, first_name, middle_name, last_name, email, mobile_number, city, emergency_contact = ''):
         try:
             # Basic Validation to Generate Unique User ID
+            if email == '':
+                raise ValueError("Email is required!")
+
             if first_name.strip() == '' or mobile_number == '':
                 raise ValueError("First Name and Mobile Number are required!")
             
@@ -27,9 +30,10 @@ class UsersMixin(object):
                             'first_name' : first_name,
                             'middle_name' : middle_name,
                             'last_name' : last_name,
+                            'email': email,
                             'mobile_number': mobile_number,
                             'city': city,
-                            'user_id': first_name + "-" + str(mobile_number),
+                            'user_id': email,
                             'emergency_contact': emergency_contact,
                             'registered_on': current_datetime.strftime('%Y-%m-%d %H:%M:%S')
                         }
@@ -40,7 +44,7 @@ class UsersMixin(object):
             return user_data['user_id']
         except Exception as e:
             print(f"Error adding user: {e}")
-            return None
+            raise e
         
 
     def get_by_name(self, first_name, middle_name = None, last_name = None):
@@ -64,6 +68,8 @@ class UsersMixin(object):
     def edit(self, user_id, user_data):
         try:
             # Basic Validation to Generate Unique User ID
+            if email == '':
+                raise ValueError("Email is required!")
             if 'first_name' not in user_data or 'mobile_number' not in user_data:
                 raise ValueError("First Name and Mobile Number are required!")
             
@@ -91,6 +97,7 @@ class Users(UsersMixin, Singleton):
     def __init__(self) -> None:
         super().__init__()
         self.collection_name = 'users'
+        Database.get_instance().create_unique_index(self.collection_name, 'email' )    
 
     
 class Drivers(UsersMixin,Singleton):
@@ -98,6 +105,7 @@ class Drivers(UsersMixin,Singleton):
     def __init__(self) -> None:
         super().__init__()
         self.collection_name = 'drivers'
+        Database.get_instance().create_unique_index(self.collection_name, 'email' )
 
 class Taxis(UsersMixin, Singleton):
 

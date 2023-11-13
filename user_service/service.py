@@ -28,14 +28,20 @@ def get_user(user_id):
 def add_user():
     if request.method == 'POST':
         request_data = request.get_json()
-        isUserAdded = Users.get_instance().add(
-            first_name=request_data.get('first_name'),
-            last_name=request_data.get('last_name'),
-            middle_name=request_data.get('middle_name'),
-            mobile_number=request_data.get('mobile_number'),
-            city=request_data.get('city'),
-            emergency_contact=request_data.get('emergency_contact'),
-        )
+        
+        try:
+            isUserAdded = Users.get_instance().add(
+                first_name=request_data.get('first_name'),
+                last_name=request_data.get('last_name'),
+                middle_name=request_data.get('middle_name'),
+                email=request_data.get('email'),
+                mobile_number=request_data.get('mobile_number'),
+                city=request_data.get('city'),
+                emergency_contact=request_data.get('emergency_contact'),
+            )
+        except  Exception as e:
+            return jsonify({'Status':'Error', 'Message': str(e)})
+
         
         if isUserAdded is None:
             return jsonify({'Status':'Error', 'Message': "There is problem while registering"})
@@ -69,14 +75,18 @@ def get_driver(driver_id):
 def add_driver():
     if request.method == 'POST':
         request_data = request.get_json()
-        isDriverAdded = Drivers.get_instance().add(
-            first_name=request_data.get('first_name'),
-            last_name=request_data.get('last_name'),
-            middle_name=request_data.get('middle_name'),
-            mobile_number=request_data.get('mobile_number'),
-            city=request_data.get('city'),
-            emergency_contact=request_data.get('emergency_contact'),
-        )
+        try:
+            isDriverAdded = Drivers.get_instance().add(
+                first_name=request_data.get('first_name'),
+                last_name=request_data.get('last_name'),
+                middle_name=request_data.get('middle_name'),
+                email=request_data.get('email'),
+                mobile_number=request_data.get('mobile_number'),
+                city=request_data.get('city'),
+                emergency_contact=request_data.get('emergency_contact'),
+            )
+        except  Exception as e:
+            return jsonify({'Status':'Error', 'Message': str(e)})
         
         if isDriverAdded is None:
             return jsonify({'Status':'Error', 'Message': "There is problem while registering"})

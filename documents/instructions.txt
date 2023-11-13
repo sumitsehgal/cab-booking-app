@@ -1,8 +1,11 @@
 Dependencies Installation which will added in code deploy setup
 
+Python Version : 3.11.5 +
+
 pip install shapely
 pip install pyproj
 pip install pymongo
+pip install request
 
 Ports used:
 8080  - Users Service
