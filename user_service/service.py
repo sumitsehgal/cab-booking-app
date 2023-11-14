@@ -40,12 +40,12 @@ def add_user():
                 emergency_contact=request_data.get('emergency_contact'),
             )
         except  Exception as e:
-            return jsonify({'Status':'Error', 'Message': str(e)})
+            return jsonify({'status':'Error', 'message': str(e)})
 
         
         if isUserAdded is None:
-            return jsonify({'Status':'Error', 'Message': "There is problem while registering"})
-    return jsonify({'Status':'Ok', 'UserId': str(isUserAdded), 'Name': request_data['first_name']})
+            return jsonify({'status':'Error', 'message': "There is problem while registering"})
+    return jsonify({'status':'Ok', 'message': "User Added"})
 
 
 @api_v1.route("/user/<user_id>", methods=["DELETE"])

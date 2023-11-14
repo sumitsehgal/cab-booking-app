@@ -68,8 +68,8 @@ class UsersMixin(object):
     def edit(self, user_id, user_data):
         try:
             # Basic Validation to Generate Unique User ID
-            if email == '':
-                raise ValueError("Email is required!")
+            if user_id == '':
+                raise ValueError("User Id is required!")
             if 'first_name' not in user_data or 'mobile_number' not in user_data:
                 raise ValueError("First Name and Mobile Number are required!")
             
