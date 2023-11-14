@@ -6,6 +6,7 @@ sys.path.append(os.pardir)
 
 from common_utils.utils import Singleton, Database
 from bson.son import SON
+from math import sin, cos, sqrt, atan2, radians
 import requests
 import datetime
 import time
@@ -78,7 +79,25 @@ class BookingModel(Singleton):
 
     def get_time_to_reach_user(self, user_location, cab_location):
         logging.info("Computing time to reach from {0}-{1}".format(user_location, cab_location))
-        return 2
+        # Approximate radius of earth in km
+        Radius_Earth = 6373.0
+        user_location_lat=radians(user_location[0])
+        user_location_long=radians(user_location[1])
+        cab_location_lat=radians(cab_location[0])
+        cab_location_lon=radians(cab_location[1])
+        long_distance = cab_location_lon - user_location_long
+        lat_distance = cab_location_lat - user_location_lat
+        area_moved = sin(lat_distance / 2) ** 2 + cos(user_location_lat) * cos(cab_location_lat) * sin(long_distance / 2) ** 2
+        angle_moved = 2 * atan2(sqrt(area_moved), sqrt(1 - area_moved))
+        distance_kms = Radius_Earth * angle_moved
+        print("Distance in Kms: ", distance_kms)
+        # Assuming Cab is going at 40Km/hr
+        time_hr = (distance_kms / 40)   
+        # Converting time to mins
+        time_mins = (time_hr * 60)  
+        return (time_mins)
+        # return 2
+        
 
     def get_nearby_taxis(self, request_data):
         user_location = request_data.get(RequestConstant.User_Location)
