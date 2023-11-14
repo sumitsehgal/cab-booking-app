@@ -90,12 +90,13 @@ class BookingModel(Singleton):
         area_moved = sin(lat_distance / 2) ** 2 + cos(user_location_lat) * cos(cab_location_lat) * sin(long_distance / 2) ** 2
         angle_moved = 2 * atan2(sqrt(area_moved), sqrt(1 - area_moved))
         distance_kms = Radius_Earth * angle_moved
-        print("Distance in Kms: ", distance_kms)
+        logging.info("Distance in Kms: %s", distance_kms)
         # Assuming Cab is going at 40Km/hr
         time_hr = (distance_kms / 40)   
         # Converting time to mins
-        time_mins = (time_hr * 60)  
-        return (time_mins)
+        time_mins = (time_hr * 60)
+        logging.info(int(round(time_mins)))  
+        return  int(round(time_mins)) if time_mins > 1 else 1 
         # return 2
         
 
