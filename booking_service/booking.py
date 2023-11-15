@@ -16,10 +16,6 @@ logging.getLogger().setLevel(logging.INFO)
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 logging.getLogger('').addHandler(console)
-notify_req =False
-start_location='Adayar'
-drop_location='Alandur'
-notify_cabs=[]
 class BookingStatus(StrEnum):
     New = "New" # Booking not confirmed by user but found cabs near to his liocation
     User_Confirmed = "User_Confirmed" # Confirmed by user, 
@@ -45,6 +41,11 @@ class BookingModel(Singleton):
         super().__init__()
         self.collection_name = 'bookings'
         self.live_location_url = "http://localhost:8085/api/v1/find/taxi"
+        self.notify_req =False
+        self.start_location='Adayar'
+        self.drop_location='Alandur'
+        self.notify_cabs=[]
+
 
 
     def _get_new_booking_document( self, user_id, user_location, destination,taxis ):
@@ -79,18 +80,18 @@ class BookingModel(Singleton):
         
     def _send_notofication_to_driver(self, booking_id, cabs,user_location,drop_location):
         #pass
-        notify_req=True
-        notify_cabs=cabs
-        start_location=user_loaction
-        drop_location=drop_location
+        self.notify_req=True
+        self.notify_cabs=cabs
+        self.start_location=user_loaction
+        self.drop_location=drop_location
         return True
     #implementaition for long polling    
-    def chkmsg():
-        while not notify_req
+    def chkmsg(self):
+        while not self.notify_req:
             time.sleep(0.5)
         
-        notify_req=False
-        return{'taxis':notify_cabs,'start_location':start_location,'drop_location':drop_location}
+        self.notify_req=False
+        return{'taxis':self.notify_cabs,'start_location':self.start_location,'drop_location':self.drop_location}
     
     #implementaition for long polling
     def get_time_to_reach_user(self, user_location, cab_location):
@@ -143,7 +144,7 @@ class BookingModel(Singleton):
         booking_id = user_id + datetime.datetime.now().strftime("%H-%M-%S")
         booking_data = self._get_new_booking_document(user_id, user_location, destination, cabs)
         Database.get_instance().insert_single_data(self.collection_name, booking_data)
-        self._send_notofication_to_driver(booking_id, cabs)
+        self._send_notofication_to_driver(booking_id, cabs,user_location,drop_location)
         time.sleep(180) # Wait for 3 minutes
         document = Database.get_instance().get_single_data(self.collection_name, {'booking_id' : booking_id})
         if document and document['status'] == BookingStatus.Confirm:
