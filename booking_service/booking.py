@@ -16,7 +16,10 @@ logging.getLogger().setLevel(logging.INFO)
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 logging.getLogger('').addHandler(console)
-
+notify_req =False
+start_location='Adayar'
+drop_location='Alandur'
+notify_cabs=[]
 class BookingStatus(StrEnum):
     New = "New" # Booking not confirmed by user but found cabs near to his liocation
     User_Confirmed = "User_Confirmed" # Confirmed by user, 
@@ -74,9 +77,22 @@ class BookingModel(Singleton):
             logging.error("Failed to get nearby taxi: {}".format(req_response.status_code))
             return []
         
-    def _send_notofication_to_driver(self, booking_id, cabs):
-        pass
-
+    def _send_notofication_to_driver(self, booking_id, cabs,user_location,drop_location):
+        #pass
+        notify_req=True
+        notify_cabs=cabs
+        start_location=user_loaction
+        drop_location=drop_location
+        return True
+    #implementaition for long polling    
+    def chkmsg():
+        while not notify_req
+            time.sleep(0.5)
+        
+        notify_req=False
+        return{'taxis':notify_cabs,'start_location':start_location,'drop_location':drop_location}
+    
+    #implementaition for long polling
     def get_time_to_reach_user(self, user_location, cab_location):
         logging.info("Computing time to reach from {0}-{1}".format(user_location, cab_location))
         # Approximate radius of earth in km

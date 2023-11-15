@@ -32,6 +32,10 @@ def cancel():
 def get_booking(booking_id):
     return jsonify(BookingModel.get_instance().get_booking_by_id({'booking_id': booking_id}))
 
+# sending notification to cabs 
+@api_v1.route(f"/booking/chkmsg", methods=['GET'])
+def chkmsg(cab_id):
+    return jsonify(BookingModel.get_instance().checkmsg())
 
 # Registering Blueprint
 app.register_blueprint(api_v1)
