@@ -82,7 +82,7 @@ class BookingModel(Singleton):
         #pass
         self.notify_req=True
         self.notify_cabs=cabs
-        self.start_location=user_loaction
+        self.start_location=user_location
         self.drop_location=drop_location
         return True
     #implementaition for long polling    
