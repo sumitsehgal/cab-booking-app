@@ -56,7 +56,7 @@ class LiveLocation(Singleton):
         latitude = request_data.get('latitude')
         longitude = request_data.get('longitude')
         # Query to get all the cabs in 2 km range
-        nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 1000)]), 'booked' : {"$not": {"$eq":True}}}
+        nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 2000)]), 'booked' : {"$not": {"$eq":True}}}
         all_records = Database.get_instance().get_multiple_data(self.collection_name, nearest_query)
         return all_records
 
@@ -80,12 +80,28 @@ class LiveLocation(Singleton):
 
 
 def main():
-    # Checkling SingleTon for each
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
-    print(LiveLocation.get_instance().mark_taxi_as_booked({'taxi_number' : 'Taxi-138'}))
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
-    print(LiveLocation.get_instance().mark_taxi_as_free({'taxi_number' : 'Taxi-138'}))
-    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.03845894554805, 'longitude': 79.14492801277856}))
+    # Updating live location of Cabs
+    Livelocation.update_location({'latitude':21.0117, 'longitude': 79.0122, 'taxi_number': 'MH11C1234'})
+    Livelocation.update_location({'latitude':21.0229, 'longitude': 79.0119, 'taxi_number': 'MH11F1234'})
+    Livelocation.update_location({'latitude':21.03, 'longitude': 79.02, 'taxi_number': 'MH11G1234'})
+    Livelocation.update_location({'latitude':21.0129, 'longitude': 79.0672, 'taxi_number': 'MH11K1234'})
+    Livelocation.update_location({'latitude':21.141, 'longitude': 79.1101, 'taxi_number': 'MH11A1234'})
+    Livelocation.update_location({'latitude':21.145, 'longitude': 79.115, 'taxi_number': 'MH11L1234'})
+    Livelocation.update_location({'latitude':21.1501, 'longitude': 79.1125, 'taxi_number': 'MH11S1234'})
+    Livelocation.update_location({'latitude':21.175, 'longitude': 79.125, 'taxi_number': 'MH11W1234'})
+    Livelocation.update_location({'latitude':21.1411, 'longitude': 79.09, 'taxi_number': 'MH11E1234'})
+    Livelocation.update_location({'latitude':21.1451, 'longitude': 79.0815, 'taxi_number': 'MH11P1234'})
+    Livelocation.update_location({'latitude':21.1403, 'longitude': 79.0589, 'taxi_number': 'MH11V1234'})
+    Livelocation.update_location({'latitude':21.15, 'longitude': 79.15, 'taxi_number': 'MH11Z1234'})
 
+    # Checkling SingleTon for each
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.0217, 'longitude': 79.0112}))
+    print(LiveLocation.get_instance().mark_taxi_as_booked({'taxi_number' : 'MH11F1234'}))
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.1432, 'longitude': 79.1121}))
+    print(LiveLocation.get_instance().mark_taxi_as_booked({'taxi_number' : 'MH11A1234'}))
+    print(LiveLocation.get_instance().mark_taxi_as_free({'taxi_number' : 'MH11F1234'}))
+    print(LiveLocation.get_instance().get_nearby_taxis({'latitude':21.1435, 'longitude': 79.0764}))
+    print(LiveLocation.get_instance().mark_taxi_as_booked({'taxi_number' : 'MH11P1234'}))
+    
 if __name__ == "__main__":
     main()
