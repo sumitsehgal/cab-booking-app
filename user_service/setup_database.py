@@ -58,7 +58,37 @@ def create_collections(database):
 def main():
     database = get_database()
     create_collections(database)
+
+def load_data()
+    ## To read the users data file and add data to the users collection    
+    with open('users_data.csv', 'r') as user_fh:
+        for row in user_fh:
+            row = row.rstrip()
+            if row:
+                (first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no) = row.split(',')
+                users=Users()
+                users.add(first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no)
+
+    # Read drivers data file and insert into drivers collection
+    with open('drivers_data.csv', 'r') as driver_fh:
+        for row in driver_fh:
+            row = row.rstrip()
+            if row:
+                (first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no) = row.split(',')
+                drivers=Drivers()
+                drivers.add(first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no)
+
+    # Read taxi data file and insert into taxi collection
+
+    with open('taxis_data.csv', 'r') as taxi_fh:
+        for row in taxi_fh:
+            row = row.rstrip()
+            if row:
+                (taxi_number,taxi_type,city,driver_name,Year_of_man,seating_capacity,avail_status,fuel_type) = row.split(',')
+                taxi=Taxis()
+                taxi.add(taxi_number,taxi_type,city,driver_name,Year_of_man,seating_capacity,avail_status,fuel_type)
     
 
 if __name__ == "__main__":
     main()
+    load_data()
