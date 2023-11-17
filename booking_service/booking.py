@@ -11,6 +11,8 @@ import requests
 import datetime
 import time
 from enum import StrEnum
+from collections import defaultdict
+
 import logging
 logging.getLogger().setLevel(logging.INFO)
 console = logging.StreamHandler()
@@ -45,18 +47,20 @@ class BookingModel(Singleton):
         self.start_location='Adayar'
         self.drop_location='Alandur'
         self.notify_cabs=[]
+        self._drivers_cache = defaultdict(list) # This can be converted into Elastic Cache
+        self._booking_cache = dict()
 
 
 
-    def _get_new_booking_document( self, user_id, user_location, destination,taxis ):
+    def _get_new_booking_document( self, booking_id, user_id, user_location, destination,taxis ):
         booking_data = { 
-            'booking_id' : "{0}-{1}".format(user_id, datetime.datetime.now().strftime("%H:%M:%S")),
+            'booking_id' : booking_id,
             'user_id' : user_id,
             'user_location' : { 'type' : 'Point', 'coordinates' : [user_location[0], user_location[1]]},
             'destination' :{ 'type' : 'Point', 'coordinates' : [destination[0], destination[1]]},
             'status' : BookingStatus.User_Confirmed,
             'taxis' : taxis,
-            'taxi_alloted' :[],
+            'taxi_alloted' :'',
         }
         logging.info("Creating new booking request: {0}".format(booking_data['booking_id']))
         return booking_data
@@ -79,20 +83,30 @@ class BookingModel(Singleton):
             return []
         
     def _send_notofication_to_driver(self, booking_id, cabs,user_location,drop_location):
-        #pass
-        self.notify_req=True
-        self.notify_cabs=cabs
-        self.start_location=user_location
-        self.drop_location=drop_location
-        return True
-    #implementaition for long polling    
-    def chkmsg(self):
-        while not self.notify_req:
-            time.sleep(0.5)
+        logging.info("Send message to notification cache")
+        # Currently we are not using Redis Cache, in future we can add it here
+        for cab in cabs:
+            self._drivers_cache[cab].append( booking_id )
+            self._booking_cache[booking_id] = { 'user_location' : user_location, 'drop_location' : drop_location}
         
-        self.notify_req=False
-        return{'taxis':self.notify_cabs,'start_location':self.start_location,'drop_location':self.drop_location}
-    
+
+    def check_trip(self, request_data):
+        cab_id = request_data.get('taxi_id')
+        bookings = self._drivers_cache.get(cab_id, [])
+        allBookings = []
+        bookings_to_remove = []
+        for booking in bookings:
+            if booking in self._booking_cache:
+                allBookings.append({'booking_id' : booking, 'user_location' : self._booking_cache[booking]['user_location'],
+                                    'drop_location' : self._booking_cache[booking]['drop_location']})
+            else:
+                bookings_to_remove.append(booking)
+        # Remove booking because its not there in booking cache
+        for b in bookings_to_remove:
+            if b in self._drivers_cache[cab_id]:
+                self._drivers_cache[cab_id].remove(b)
+        return allBookings
+        
     #implementaition for long polling
     def get_time_to_reach_user(self, user_location, cab_location):
         logging.info("Computing time to reach from {0}-{1}".format(user_location, cab_location))
@@ -138,49 +152,83 @@ class BookingModel(Singleton):
         # Querying the cab location again
         documents = self._query_location_service(user_location)
         cabs = []
+        cab_location = {}
         for document in documents:
             cabs.append(document['taxi_number'])
+            cab_location[document['taxi_number']] = document['location']['coordinates']
 
-        booking_id = user_id + datetime.datetime.now().strftime("%H-%M-%S")
-        booking_data = self._get_new_booking_document(user_id, user_location, destination, cabs)
+        booking_id = user_id +"-" + datetime.datetime.now().strftime("%H-%M-%S")
+        booking_data = self._get_new_booking_document(booking_id, user_id, user_location, destination, cabs)
         Database.get_instance().insert_single_data(self.collection_name, booking_data)
-        self._send_notofication_to_driver(booking_id, cabs,user_location,drop_location)
+        self._send_notofication_to_driver(booking_id, cabs,user_location,destination)
         time.sleep(180) # Wait for 3 minutes
         document = Database.get_instance().get_single_data(self.collection_name, {'booking_id' : booking_id})
+        logging.info(document)
         if document and document['status'] == BookingStatus.Confirm:
-            return {'booking_id' : booking_id, 'status' : BookingStatus.Confirm, 'taxi' : document['taxi_alloted'] }
+            return {'booking_id' : booking_id, 'status' : BookingStatus.Confirm, 'taxi_alloted' : document['taxi_alloted'], 
+                    'user_location' : user_location, 'cab_location' :  cab_location.get(document['taxi_alloted'], [] )}
         else:
                 # After 3 mins since no cab was found setting status to No_cabs
             update_data = self._get_status_update(BookingStatus.No_Cabs)
             update_key = self._get_key(booking_id)
             Database.get_instance().update_single_data(self.collection_name, update_key, update_data)
-            return {'booking_id' : booking_id, 'status' : BookingStatus.No_Cabs, 'taxi' : []}
+            return {'booking_id' : booking_id, 'status' : BookingStatus.No_Cabs, 'taxi_alloted' : '', 
+                    'user_location' : user_location, 'cab_location' : []}
 
 
     def cancel_booking(self, request_data):
         booking_id = request_data.get(RequestConstant.Booking_Id)
+        if booking_id in self._booking_cache:
+            del self._booking_cache[booking_id]
         if booking_id:
             update_data = self._get_status_update(BookingStatus.Cancelled)
             update_key = self._get_key(booking_id)
             Database.get_instance().update_single_data(self.collection_name, update_key, update_data)
-            return { 'Status' : 'Booking Deleted'} 
+            return { 'status' : 'Booking Deleted'} 
         else:
             logging.warn("Cancel booking request received without booking id.")
-            return { 'Status' : 'Booking Deleted'}
+            return { 'status' : 'Booking Deleted'}
         
     def get_booking_by_id(self, request_data):
         booking_id = request_data.get(RequestConstant.Booking_Id)
         if booking_id is None:
-            return {'Status': False, 'Message': 'Booking ID not Exists'}
+            return {'status': False, 'Message': 'Booking ID not Exists'}
         get_key = self._get_key(booking_id)
         booking = Database.get_instance().get_single_data(self.collection_name, get_key)
         if booking is None:
-            return {'Status': False, 'Message': 'Booking not Exists'}
+            return {'status': False, 'Message': 'Booking not Exists'}
         
         return {
-            'Status': True,
+            'status': True,
             'Data': booking
         }
+
+    def booking_driver_action(self, request_data):
+        logging.info(request_data)
+        booking_id = request_data.get('booking_id')
+        taxi_id = request_data.get('taxi_id')
+        status = request_data.get('status')
+        query_key = self._get_key(booking_id)
+        logging.info("Status: {}".format(status))
+        if status == "Accept":
+            document = Database.get_instance().get_single_data(self.collection_name, query_key)
+            if booking_id in self._booking_cache:
+                del self._booking_cache[booking_id]
+            if document and document['status']==BookingStatus.User_Confirmed:
+                update_data = {'taxi_alloted' : taxi_id, 'status' : BookingStatus.Confirm }
+                Database.get_instance().update_single_data(self.collection_name, query_key, update_data)
+                return { 'status' : 'Confirmed', 'booking_id' : booking_id, 
+                        'user_location' : document['user_location']['coordinates'],
+                        'destination' : document['destination']['coordinates']}
+            else:
+                return { 'status' : 'Reject', 'booking_id' : booking_id, 'user_location' : [], 'destination' : []}
+        else:
+            if booking_id in self._drivers_cache[taxi_id]:
+                logging.info("Clearing booking ID from driver Cache")
+                self._drivers_cache[taxi_id].remove(booking_id)
+            else:
+                logging.info(self._drivers_cache)
+            return { 'status' : 'Reject', 'booking_id' : booking_id, 'user_location' : [], 'destination' : []}
 
 
 

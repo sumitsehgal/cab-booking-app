@@ -33,12 +33,21 @@ def get_booking(booking_id):
     return jsonify(BookingModel.get_instance().get_booking_by_id({'booking_id': booking_id}))
 
 # sending notification to cabs 
-@api_v1.route(f"/booking/chkmsg", methods=['GET'])
-def chkmsg(cab_id):
-    return jsonify(BookingModel.get_instance().checkmsg())
+@api_v1.route(f"/booking/check/trip", methods=['POST'])
+def chk_for_trip():
+    request_data = request.get_json()
+    data = BookingModel.get_instance().check_trip(request_data)
+    print(data)
+    return jsonify(data)
+
+@api_v1.route("/booking/driver/action", methods=['POST'])
+def booking_driver_action():
+    request_data = request.get_json()
+    print("Request Received: {}".format(request_data))
+    return jsonify(BookingModel.get_instance().booking_driver_action(request_data))
 
 # Registering Blueprint
 app.register_blueprint(api_v1)
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8090)
+    app.run(debug = False, host='0.0.0.0', port=8090)
