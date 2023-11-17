@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		297B6D6D2B072D4C00D9871B /* DriverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B6D6C2B072D4C00D9871B /* DriverScreen.swift */; };
+		298931D42B0100B500F789BB /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298931D32B0100B500F789BB /* UserDetailView.swift */; };
+		29C5E7E12AFFE8EF00C84006 /* CuberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E7E02AFFE8EF00C84006 /* CuberApp.swift */; };
+		29C5E7E32AFFE8EF00C84006 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E7E22AFFE8EF00C84006 /* ContentView.swift */; };
+		29C5E7E52AFFE8F100C84006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29C5E7E42AFFE8F100C84006 /* Assets.xcassets */; };
+		29C5E7E92AFFE8F100C84006 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29C5E7E82AFFE8F100C84006 /* Preview Assets.xcassets */; };
+		29C5E7F32AFFE8F100C84006 /* CuberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E7F22AFFE8F100C84006 /* CuberTests.swift */; };
+		29C5E7FD2AFFE8F100C84006 /* CuberUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E7FC2AFFE8F100C84006 /* CuberUITests.swift */; };
+		29C5E7FF2AFFE8F100C84006 /* CuberUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E7FE2AFFE8F100C84006 /* CuberUITestsLaunchTests.swift */; };
+		29C5E80C2AFFEB0F00C84006 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E80B2AFFEB0E00C84006 /* MapView.swift */; };
+		29C5E80E2AFFF1EA00C84006 /* SearchCabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C5E80D2AFFF1EA00C84006 /* SearchCabView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		29C5E7EF2AFFE8F100C84006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29C5E7D52AFFE8EF00C84006 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29C5E7DC2AFFE8EF00C84006;
+			remoteInfo = Cuber;
+		};
+		29C5E7F92AFFE8F100C84006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29C5E7D52AFFE8EF00C84006 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29C5E7DC2AFFE8EF00C84006;
+			remoteInfo = Cuber;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		297B6D6C2B072D4C00D9871B /* DriverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverScreen.swift; sourceTree = "<group>"; };
+		298931D32B0100B500F789BB /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
+		29C5E7DD2AFFE8EF00C84006 /* Cuber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cuber.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C5E7E02AFFE8EF00C84006 /* CuberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuberApp.swift; sourceTree = "<group>"; };
+		29C5E7E22AFFE8EF00C84006 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		29C5E7E42AFFE8F100C84006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		29C5E7E62AFFE8F100C84006 /* Cuber.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cuber.entitlements; sourceTree = "<group>"; };
+		29C5E7E82AFFE8F100C84006 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		29C5E7EE2AFFE8F100C84006 /* CuberTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CuberTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C5E7F22AFFE8F100C84006 /* CuberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuberTests.swift; sourceTree = "<group>"; };
+		29C5E7F82AFFE8F100C84006 /* CuberUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CuberUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C5E7FC2AFFE8F100C84006 /* CuberUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuberUITests.swift; sourceTree = "<group>"; };
+		29C5E7FE2AFFE8F100C84006 /* CuberUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuberUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		29C5E80B2AFFEB0E00C84006 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		29C5E80D2AFFF1EA00C84006 /* SearchCabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCabView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29C5E7DA2AFFE8EF00C84006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7EB2AFFE8F100C84006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7F52AFFE8F100C84006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		29C5E7D42AFFE8EF00C84006 = {
+			isa = PBXGroup;
+			children = (
+				29C5E7DF2AFFE8EF00C84006 /* Cuber */,
+				29C5E7F12AFFE8F100C84006 /* CuberTests */,
+				29C5E7FB2AFFE8F100C84006 /* CuberUITests */,
+				29C5E7DE2AFFE8EF00C84006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		29C5E7DE2AFFE8EF00C84006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				29C5E7DD2AFFE8EF00C84006 /* Cuber.app */,
+				29C5E7EE2AFFE8F100C84006 /* CuberTests.xctest */,
+				29C5E7F82AFFE8F100C84006 /* CuberUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29C5E7DF2AFFE8EF00C84006 /* Cuber */ = {
+			isa = PBXGroup;
+			children = (
+				297B6D6C2B072D4C00D9871B /* DriverScreen.swift */,
+				29C5E7E02AFFE8EF00C84006 /* CuberApp.swift */,
+				29C5E7E22AFFE8EF00C84006 /* ContentView.swift */,
+				29C5E80B2AFFEB0E00C84006 /* MapView.swift */,
+				29C5E80D2AFFF1EA00C84006 /* SearchCabView.swift */,
+				29C5E7E42AFFE8F100C84006 /* Assets.xcassets */,
+				29C5E7E62AFFE8F100C84006 /* Cuber.entitlements */,
+				29C5E7E72AFFE8F100C84006 /* Preview Content */,
+				298931D32B0100B500F789BB /* UserDetailView.swift */,
+			);
+			path = Cuber;
+			sourceTree = "<group>";
+		};
+		29C5E7E72AFFE8F100C84006 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				29C5E7E82AFFE8F100C84006 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		29C5E7F12AFFE8F100C84006 /* CuberTests */ = {
+			isa = PBXGroup;
+			children = (
+				29C5E7F22AFFE8F100C84006 /* CuberTests.swift */,
+			);
+			path = CuberTests;
+			sourceTree = "<group>";
+		};
+		29C5E7FB2AFFE8F100C84006 /* CuberUITests */ = {
+			isa = PBXGroup;
+			children = (
+				29C5E7FC2AFFE8F100C84006 /* CuberUITests.swift */,
+				29C5E7FE2AFFE8F100C84006 /* CuberUITestsLaunchTests.swift */,
+			);
+			path = CuberUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29C5E7DC2AFFE8EF00C84006 /* Cuber */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29C5E8022AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "Cuber" */;
+			buildPhases = (
+				29C5E7D92AFFE8EF00C84006 /* Sources */,
+				29C5E7DA2AFFE8EF00C84006 /* Frameworks */,
+				29C5E7DB2AFFE8EF00C84006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cuber;
+			productName = Cuber;
+			productReference = 29C5E7DD2AFFE8EF00C84006 /* Cuber.app */;
+			productType = "com.apple.product-type.application";
+		};
+		29C5E7ED2AFFE8F100C84006 /* CuberTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29C5E8052AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "CuberTests" */;
+			buildPhases = (
+				29C5E7EA2AFFE8F100C84006 /* Sources */,
+				29C5E7EB2AFFE8F100C84006 /* Frameworks */,
+				29C5E7EC2AFFE8F100C84006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29C5E7F02AFFE8F100C84006 /* PBXTargetDependency */,
+			);
+			name = CuberTests;
+			productName = CuberTests;
+			productReference = 29C5E7EE2AFFE8F100C84006 /* CuberTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		29C5E7F72AFFE8F100C84006 /* CuberUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29C5E8082AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "CuberUITests" */;
+			buildPhases = (
+				29C5E7F42AFFE8F100C84006 /* Sources */,
+				29C5E7F52AFFE8F100C84006 /* Frameworks */,
+				29C5E7F62AFFE8F100C84006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29C5E7FA2AFFE8F100C84006 /* PBXTargetDependency */,
+			);
+			name = CuberUITests;
+			productName = CuberUITests;
+			productReference = 29C5E7F82AFFE8F100C84006 /* CuberUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29C5E7D52AFFE8EF00C84006 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					29C5E7DC2AFFE8EF00C84006 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					29C5E7ED2AFFE8F100C84006 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 29C5E7DC2AFFE8EF00C84006;
+					};
+					29C5E7F72AFFE8F100C84006 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 29C5E7DC2AFFE8EF00C84006;
+					};
+				};
+			};
+			buildConfigurationList = 29C5E7D82AFFE8EF00C84006 /* Build configuration list for PBXProject "Cuber" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 29C5E7D42AFFE8EF00C84006;
+			productRefGroup = 29C5E7DE2AFFE8EF00C84006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29C5E7DC2AFFE8EF00C84006 /* Cuber */,
+				29C5E7ED2AFFE8F100C84006 /* CuberTests */,
+				29C5E7F72AFFE8F100C84006 /* CuberUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29C5E7DB2AFFE8EF00C84006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C5E7E92AFFE8F100C84006 /* Preview Assets.xcassets in Resources */,
+				29C5E7E52AFFE8F100C84006 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7EC2AFFE8F100C84006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7F62AFFE8F100C84006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29C5E7D92AFFE8EF00C84006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C5E7E32AFFE8EF00C84006 /* ContentView.swift in Sources */,
+				297B6D6D2B072D4C00D9871B /* DriverScreen.swift in Sources */,
+				29C5E80E2AFFF1EA00C84006 /* SearchCabView.swift in Sources */,
+				29C5E80C2AFFEB0F00C84006 /* MapView.swift in Sources */,
+				298931D42B0100B500F789BB /* UserDetailView.swift in Sources */,
+				29C5E7E12AFFE8EF00C84006 /* CuberApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7EA2AFFE8F100C84006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C5E7F32AFFE8F100C84006 /* CuberTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29C5E7F42AFFE8F100C84006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C5E7FF2AFFE8F100C84006 /* CuberUITestsLaunchTests.swift in Sources */,
+				29C5E7FD2AFFE8F100C84006 /* CuberUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		29C5E7F02AFFE8F100C84006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29C5E7DC2AFFE8EF00C84006 /* Cuber */;
+			targetProxy = 29C5E7EF2AFFE8F100C84006 /* PBXContainerItemProxy */;
+		};
+		29C5E7FA2AFFE8F100C84006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29C5E7DC2AFFE8EF00C84006 /* Cuber */;
+			targetProxy = 29C5E7F92AFFE8F100C84006 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		29C5E8002AFFE8F100C84006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		29C5E8012AFFE8F100C84006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		29C5E8032AFFE8F100C84006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cuber/Cuber.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Cuber/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For Cab booking";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "For Cab Booking";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.Cuber;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29C5E8042AFFE8F100C84006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Cuber/Cuber.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Cuber/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For Cab booking";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "For Cab Booking";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.Cuber;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		29C5E8062AFFE8F100C84006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For cab booking";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.CuberTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cuber.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cuber";
+			};
+			name = Debug;
+		};
+		29C5E8072AFFE8F100C84006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For cab booking";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.CuberTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cuber.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cuber";
+			};
+			name = Release;
+		};
+		29C5E8092AFFE8F100C84006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.CuberUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Cuber;
+			};
+			name = Debug;
+		};
+		29C5E80A2AFFE8F100C84006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = IFI.CuberUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Cuber;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		29C5E7D82AFFE8EF00C84006 /* Build configuration list for PBXProject "Cuber" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29C5E8002AFFE8F100C84006 /* Debug */,
+				29C5E8012AFFE8F100C84006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29C5E8022AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "Cuber" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29C5E8032AFFE8F100C84006 /* Debug */,
+				29C5E8042AFFE8F100C84006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29C5E8052AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "CuberTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29C5E8062AFFE8F100C84006 /* Debug */,
+				29C5E8072AFFE8F100C84006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29C5E8082AFFE8F100C84006 /* Build configuration list for PBXNativeTarget "CuberUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29C5E8092AFFE8F100C84006 /* Debug */,
+				29C5E80A2AFFE8F100C84006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29C5E7D52AFFE8EF00C84006 /* Project object */;
+}
