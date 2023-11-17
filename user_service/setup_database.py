@@ -59,7 +59,7 @@ def main():
     database = get_database()
     create_collections(database)
 
-def load_data()
+def load_data():
     ## To read the users data file and add data to the users collection    
     with open('users_data.csv', 'r') as user_fh:
         for row in user_fh:
