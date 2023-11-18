@@ -17,6 +17,9 @@ class BoundaryHelper:
 
     # To find the latitude and longitude along the circle for a given km radius from the given point
     def __get_service_area(self):
+        """
+        Get all the latiitude and longitude in the boundary defined
+        """
     # Azimuthal equidistant projection
         aeqd_proj = '+proj=aeqd +lat_0={lat} +lon_0={lon} +x_0=0 +y_0=0'
         project = partial(

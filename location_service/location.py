@@ -21,6 +21,9 @@ class LiveLocation(Singleton):
 
 
     def get_all_taxis(self):
+        """
+        Fuction to return live location of all the taxis.
+        """
         req_url = 'http://localhost:8080/api/v1/taxi'
         req_response = requests.get(req_url,timeout=120)
         all_taxis = req_response.json()
@@ -28,6 +31,9 @@ class LiveLocation(Singleton):
 
 
     def update_location(self, json_data ):
+        """
+        Function to update the location of the taxi
+        """
         lat = json_data.get('latitude', None)
         lon = json_data.get('longitude', None)
         taxi_number = json_data.get('taxi_number', None)
@@ -45,22 +51,39 @@ class LiveLocation(Singleton):
         return count_key
     
     def get_by_number( self, taxi_number):
+        """
+        Given a taxi number get it's live location
+        """
         query = {'taxi_number': taxi_number}
         document =  Database.get_instance().get_single_data(self.collection_name, query)
         return { 'taxi_number' : taxi_number, 'latitude' : document['location']['coordinates'][0], 'longitude' : document['location']['coordinates'][1]}
     
     def get_boundary_coordinates(self):
+        """
+        Function to return boundar co-ordinates
+        """
         return self.boundaryHelper.min_max_coordinates()
     
     def get_nearby_taxis(self,request_data):
+        """
+        Function to get nearby Taxi, if the user in the service area then only the taxi is returned.
+        Otherwise it returns empty list.
+        """
         latitude = request_data.get('latitude')
         longitude = request_data.get('longitude')
         # Query to get all the cabs in 2 km range
-        nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 2000)]), 'booked' : {"$not": {"$eq":True}}}
-        all_records = Database.get_instance().get_multiple_data(self.collection_name, nearest_query)
-        return all_records
-
+        # Query to exluce cabs that are booked
+        if self.boundaryHelper.is_in_service_boundary(latitude, longitude):
+            nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 2000)]), 'booked' : {"$not": {"$eq":True}}}
+            return Database.get_instance().get_multiple_data(self.collection_name, nearest_query)
+        else:
+            print("User is not in the service area")
+            return []
+        
     def mark_taxi_as_booked(self, request_data):
+        """
+        Function to mark the taxi as booked, so that it will be removed from near by taxi query.
+        """
         taxi_number = request_data.get("taxi_number")
         if taxi_number:
             update_data = { 'booked' : True }
@@ -70,6 +93,9 @@ class LiveLocation(Singleton):
             return { "message" : "Taxi {0} is booked".format(taxi_number)}
 
     def mark_taxi_as_free(self, request_data):
+        """
+        Function to mark the taxi as free, so that it will be added in near by taxi query.
+        """
         taxi_number = request_data.get("taxi_number")
         if taxi_number:
             update_data = { 'booked' : False }
