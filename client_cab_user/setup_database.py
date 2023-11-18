@@ -6,96 +6,80 @@ It will create
 3. It will create drivers collection
 4. It will create live_locations collection
 """
-from pymongo import MongoClient
-import logging
-import os
-import sys
-# Adding path for now, in produciton it will be part of system setup
-sys.path.append(os.getcwd())
-sys.path.append(os.pardir)
 
-from user_service.users import Users, Taxis, Drivers
-
-#from dotenv import load_dotenv
-import os
-
-# Load Environment Variables
-#load_dotenv()
-
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
-
-# Logging Path
-# Configure the logging system
-log_file = os.getenv('LOG_FILE')
-logging.basicConfig(filename=log_file, level=logging.INFO)
-
-
-
-#import dns.resolver
-#dns.resolver.default_resolver=dns.resolver.Resolver(configure=False)
-
-
-def get_database():
-    #db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
-    db_client = MongoClient("mongodb+srv://fahad_madani:UbuYtTGkByg1TKjN@learn-and-explore.era9d9u.mongodb.net/?retryWrites=true&w=majority")
-    db_names = db_client.list_database_names()
-    if DB_NAME in db_names:
-        logging.info("Database already present, skipping creation of database")
-    else:
-        db_client[DB_NAME]
-        logging.info("Database created")
-    return db_client[DB_NAME]
-
-def create_collections(database):
-    # Remember till there is no data, collections are not created, so setting up some random data
-    # Create users collection
-    print("Creating users")
-    database['users']
-    Users.get_instance().add("Fahad", "Mustafa", "Madani", "9820775814", "Mumbai")
-    # Create drivers collection
-    database['drivers']
-    Drivers.get_instance().add("Fahad-2", "Mustafa", "Madani", "9820775814", "Mumbai")
-    # Creating taxi collection
-    database['taxis']
-    Taxis.get_instance().add("MH-02-AA-1234", "Luxury", "Mumbai", "Fahad-2",2018, 4, "Available", "Diesel" )
+import requests
+BASE_HTTP_URL = "http://localhost:8080/api/v1/"
 
     
 def main():
-    #database = get_database()
-    load_data()
+    add_users()
+    add_drivers()
+    add_taxis()
+    
 
-def load_data():
-    ## To read the users data file and add data to the users collection    
+def add_users():
+    print("*********** Adding Users ***********")
     with open('users_data.csv', 'r') as user_fh:
         for row in user_fh:
             row = row.rstrip()
             if row:
                 (first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no) = row.split(',')
-                users=Users()
-                users.add(first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no)
+                user_data = {
+                    "first_name": first_name,
+                    "middle_name": middle_name,
+                    "last_name": last_name,
+                    "email": email_id,
+                    "city": city,
+                    "mobile_number": mobile_number,
+                    "emergency_contact" : emergency_no
+                }
+                req_url = BASE_HTTP_URL + "user"
+                response = requests.post(req_url, json = user_data)
+                print("Status: {0} with Message: {1}".format(response.status_code, response.json()['message']))
 
+
+def add_drivers():
     # Read drivers data file and insert into drivers collection
+    print("*********** Adding Drivers ***********")
     with open('drivers_data.csv', 'r') as driver_fh:
         for row in driver_fh:
             row = row.rstrip()
             if row:
                 (first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no) = row.split(',')
-                drivers=Drivers()
-                drivers.add(first_name, middle_name, last_name, email_id, mobile_number, city, emergency_no)
+                driver_data = {
+                    "first_name": first_name,
+                    "middle_name": middle_name,
+                    "last_name": last_name,
+                    "email": email_id,
+                    "city": city,
+                    "mobile_number": mobile_number,
+                    "emergency_contact" : emergency_no
+                }
+                req_url = BASE_HTTP_URL + "driver"
+                response = requests.post(req_url, json = driver_data)
+                print("Status: {0} with Message: {1}".format(response.status_code, response.json()['message']))
 
-    # Read taxi data file and insert into taxi collection
 
+def add_taxis():
+    print("*********** Adding Taxis ***********")
     with open('taxis_data.csv', 'r') as taxi_fh:
         for row in taxi_fh:
             row = row.rstrip()
             if row:
                 (taxi_number,taxi_type,city,driver_name,Year_of_man,seating_capacity,avail_status,fuel_type) = row.split(',')
-                taxi=Taxis()
-                taxi.add(taxi_number,taxi_type,city,driver_name,Year_of_man,seating_capacity,avail_status,fuel_type)
-    
+                taxi_data = {
+                            'taxi_number' : taxi_number, # this should be unique
+                            'taxi_type' : taxi_type,
+                            'city' : city,
+                            'driver' : driver_name if driver_name else '',
+                            'year_of_manufacturing': Year_of_man,
+                            'seating_capacity': seating_capacity,
+                            'availability_status': avail_status,
+                            'fuel_type': fuel_type,
+                        }
+                req_url = BASE_HTTP_URL + "taxi"
+                response = requests.post(req_url, json = taxi_data)
+                print("Status: {0} with Message: {1}".format(response.status_code, response.json()['message']))
 
 if __name__ == "__main__":
     main()
-    #load_data()
