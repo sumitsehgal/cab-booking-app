@@ -8,13 +8,19 @@ It will create
 """
 from pymongo import MongoClient
 import logging
-from users import Users, Taxis, Drivers
+import os
+import sys
+# Adding path for now, in produciton it will be part of system setup
+sys.path.append(os.getcwd())
+sys.path.append(os.pardir)
 
-from dotenv import load_dotenv
+from user_service.users import Users, Taxis, Drivers
+
+#from dotenv import load_dotenv
 import os
 
 # Load Environment Variables
-load_dotenv()
+#load_dotenv()
 
 DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT')
@@ -32,7 +38,8 @@ logging.basicConfig(filename=log_file, level=logging.INFO)
 
 
 def get_database():
-    db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
+    #db_client = MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}')
+    db_client = MongoClient("mongodb+srv://fahad_madani:UbuYtTGkByg1TKjN@learn-and-explore.era9d9u.mongodb.net/?retryWrites=true&w=majority")
     db_names = db_client.list_database_names()
     if DB_NAME in db_names:
         logging.info("Database already present, skipping creation of database")
@@ -56,8 +63,8 @@ def create_collections(database):
 
     
 def main():
-    database = get_database()
-    create_collections(database)
+    #database = get_database()
+    load_data()
 
 def load_data():
     ## To read the users data file and add data to the users collection    
@@ -91,4 +98,4 @@ def load_data():
 
 if __name__ == "__main__":
     main()
-    load_data()
+    #load_data()

@@ -13,6 +13,9 @@ api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 # List of Users
 @api_v1.route("/user", methods=["GET"])
 def list_user():
+    """
+    API to get all the users
+    """
     userLists = list(Users().get_instance().get_all())
     response_data = {'Status':"Ok", "Data": userLists}
 
@@ -20,12 +23,18 @@ def list_user():
 
 @api_v1.route("/user/<user_id>", methods=["GET"])
 def get_user(user_id):
+    """
+    API to get user by User ID
+    """
     user = Users().get_instance().get_by_id(user_id)
     return jsonify({'Status':"Ok", "Data": user})
 
 
 @api_v1.route("/user", methods=["POST"])
 def add_user():
+    """
+    API to register/add user
+    """
     if request.method == 'POST':
         request_data = request.get_json()
         
@@ -50,11 +59,17 @@ def add_user():
 
 @api_v1.route("/user/<user_id>", methods=["DELETE"])
 def delete_user(user_id):
+    """
+    API to delete user
+    """
     Users.get_instance().delete_by_id(user_id)
     return jsonify({'Status':"Ok"})
 
 @api_v1.route("/user/<user_id>", methods=["PATCH"])
 def update_user(user_id):
+    """
+    API to update user
+    """
     request_data = request.get_json()
     Users.get_instance().edit(user_id, request_data)
     return jsonify({'Status':"Ok"})
@@ -62,17 +77,26 @@ def update_user(user_id):
 
 @api_v1.route("/driver", methods=["GET"])
 def list_driver():
+    """
+    API to list all the drivers
+    """
     drivers = list(Drivers().get_instance().get_all())
     return jsonify({'Status':"Ok", "Data": drivers})
 
 @api_v1.route("/driver/<driver_id>", methods=["GET"])
 def get_driver(driver_id):
+    """
+    API to get Driver
+    """
     driver = Drivers().get_instance().get_by_id(driver_id)
     return jsonify({'Status':"Ok", "Data": driver})
 
 
 @api_v1.route("/driver", methods=["POST"])
 def add_driver():
+    """
+    API to add/register driver
+    """
     if request.method == 'POST':
         request_data = request.get_json()
         try:
@@ -95,11 +119,17 @@ def add_driver():
 
 @api_v1.route("/driver/<driver_id>", methods=["DELETE"])
 def delete_driver(driver_id):
+    """
+    API to delete driver
+    """
     Drivers.get_instance().delete_by_id(driver_id)
     return jsonify({'Status':"Ok"})
 
 @api_v1.route("/driver/<driver_id>", methods=["PATCH"])
 def update_driver(driver_id):
+    """
+    API to update Driver
+    """
     request_data = request.get_json()
     Drivers.get_instance().edit(driver_id, request_data)
     return jsonify({'Status':"Ok"})
@@ -107,11 +137,17 @@ def update_driver(driver_id):
 
 @api_v1.route("/taxi/<taxi_number>", methods=["GET"])
 def get_taxi(taxi_number):
+    """
+    API to get Taxi given taxi number
+    """
     taxi = Taxis().get_instance().get_by_number(taxi_number)
     return jsonify({'Status':"Ok", "Data": taxi})
 
 @api_v1.route("/taxi", methods=["POST"])
 def add_taxi():
+    """
+    API to add Taxi
+    """
     if request.method == 'POST':
         request_data = request.get_json()
         isTaxiAdded = Taxis.get_instance().add(
@@ -131,6 +167,9 @@ def add_taxi():
 
 @api_v1.route("/taxi/<taxi_number>", methods=["PATCH"])
 def update_taxi(taxi_number):
+    """
+    API to update TAxi
+    """
     request_data = request.get_json()
     Taxis.get_instance().edit(taxi_number, request_data)
     return jsonify({'Status': "Ok"})
@@ -138,11 +177,17 @@ def update_taxi(taxi_number):
 
 @api_v1.route("/taxi/<taxi_number>", methods=["DELETE"])
 def delete_taxi(taxi_number):
+    """
+    API to delete taxi
+    """
     Taxis.get_instance().delete_by_id(taxi_number=taxi_number)
     return jsonify({'Status':"Ok"})
 
 @api_v1.route("/taxi", methods=["GET"])
 def list_taxi():
+    """
+    API to list taxi
+    """
     taxis = list(Taxis().get_instance().get_all())
     return jsonify({'Status':"Ok", "Data": taxis})
 
