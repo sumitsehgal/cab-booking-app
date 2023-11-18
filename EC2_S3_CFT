@@ -1,0 +1,162 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "AWS CFT Template for S3 and EC2 for Capstone Project",
+  "Resources" : {
+        "CFTVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+            "CidrBlock": "10.0.0.0/16",
+            "EnableDnsHostnames" : "true", 
+            "EnableDnsSupport" : "true",
+            "Tags" : [ {"Key" : "Name", "Value" : "CFTVPC"} ]
+            }
+        },
+        "Subnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "CFTVPC"
+                },
+                "Tags" : [ {"Key" : "Name", "Value" : "Subnet1"} ],
+                "CidrBlock" : "10.0.1.0/24",
+      			"AvailabilityZone" : "us-east-1a",
+      			"MapPublicIpOnLaunch" : "true"
+            }
+        },
+        "Subnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "CFTVPC"
+                },
+                "CidrBlock" : "10.0.2.0/24",
+      			"AvailabilityZone" : "us-east-1b",
+      			"MapPublicIpOnLaunch" : "true",
+      			"Tags" : [ {"Key" : "Name", "Value" : "Subnet2"} ]
+            }
+        },
+    "CFTSG": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+              "GroupDescription" : "CFT Security Group",
+            	"SecurityGroupIngress" : [{
+         			"IpProtocol" : "tcp",
+         			"FromPort" : 80,
+         			"ToPort" : 80,
+         			"CidrIp" : "0.0.0.0/0"
+      			},
+      			{
+         			"IpProtocol" : "tcp",
+         			"FromPort" : 22,
+         			"ToPort" : 22,
+         			"CidrIp" : "0.0.0.0/0"
+      			},
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 8080,
+                    "ToPort" : 8080,
+                    "CidrIp" : "0.0.0.0/0"
+                 },
+                 {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 8085,
+                    "ToPort" : 8085,
+                    "CidrIp" : "0.0.0.0/0"
+                 },
+                 {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 8090,
+                    "ToPort" : 8090,
+                    "CidrIp" : "0.0.0.0/0"
+                 }],
+                     "VpcId": {
+                    "Ref": "CFTVPC"
+                }
+            }
+        },
+       "CFTEC2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+            	"InstanceType" : "t2.micro",
+            	"ImageId" : "ami-0fc5d935ebf8bc3bc",
+                "KeyName" : "cab-booking-key-1",
+                    "NetworkInterfaces": [
+                    {
+                        "SubnetId": {
+                            "Ref": "Subnet1"
+                        },
+                        "GroupSet": [{ "Ref" : "CFTSG" }],
+                        "DeviceIndex": "0",
+                        "DeleteOnTermination": "true"
+                    }
+                ],
+               "Tags" : [ {"Key" : "Name", "Value" : "cab-booking-ec2-1"} ]
+            }
+       },   
+
+	        "CFTIG": {
+	            "Type": "AWS::EC2::InternetGateway",
+                "Properties": {
+					"Tags" : [ {"Key" : "Name", "Value" : "CFTIG"} ]            
+	            }
+	        },
+        "RouteTable1" : {
+   			"Type" : "AWS::EC2::RouteTable",
+
+            "Properties" : {
+      			"VpcId" : { "Ref" : "CFTVPC" },
+      			"Tags" : [ {"Key" : "Name", "Value" : "RouteTable1"} ]
+     		}
+   		},
+   		"RouteTable2" : {
+   			"Type" : "AWS::EC2::RouteTable",
+   			"Properties" : {
+      			"VpcId" : { "Ref" : "CFTVPC" },
+      			"Tags" : [ {"Key" : "Name", "Value" : "RouteTable2"} ]
+     		}
+   		},
+   		"myRoute1" : {
+   			"Type" : "AWS::EC2::Route",
+   			"Properties" : {
+      			"RouteTableId" : { "Ref" : "RouteTable1" },
+      			"DestinationCidrBlock" : "0.0.0.0/0",
+                "GatewayId" : { "Ref" : "CFTIG" }
+   			}
+		},
+		"myRoute2" : {
+   			"Type" : "AWS::EC2::Route",
+   			"Properties" : {
+      			"RouteTableId" : { "Ref" : "RouteTable2" },
+      			"DestinationCidrBlock" : "0.0.0.0/0",
+      			"GatewayId" : { "Ref" : "CFTIG" }
+   			}
+		},
+		"mySubnetRouteTableAssociation1" : {
+         "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+         "Properties" : {
+            "SubnetId" : { "Ref" : "Subnet1" },
+            "RouteTableId" : { "Ref" : "RouteTable1" }
+         }
+      },
+      "mySubnetRouteTableAssociation2" : {
+         "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+         "Properties" : {
+            "SubnetId" : { "Ref" : "Subnet2" },
+            "RouteTableId" : { "Ref" : "RouteTable2" }
+         }
+      },
+   		"IGAttachment" : {
+  			"Type" : "AWS::EC2::VPCGatewayAttachment",
+  			"Properties" : {
+      		"InternetGatewayId" : { "Ref" : "CFTIG"},
+            "VpcId" : { "Ref" : "CFTVPC"}
+    		}
+		},
+        "CFTS3":{
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" : "cab-booking-app-repos"
+                }
+          }
+  }
+}
