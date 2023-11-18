@@ -43,6 +43,9 @@ class UsersMixin(object):
             
             # Insert into Collection
             inserted_id = Database.get_instance().insert_single_data(self.collection_name, user_data)
+            # Create Unique index
+            Database.get_instance().create_unique_index(self.collection_name, 'user_id')
+
             # User User ID
             return user_data['user_id']
         except Exception as e:
@@ -166,6 +169,8 @@ class Taxis(Singleton):
                         }
             # Insert into Collection
             inserted_id = Database.get_instance().insert_single_data(self.collection_name, taxi_data)
+            # Add Index
+            Database.get_instance().create_unique_index(self.collection_name, 'taxi_number')
             # User User ID
             return taxi_data['taxi_number']
         except Exception as e:
