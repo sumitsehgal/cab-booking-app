@@ -37,10 +37,13 @@ class LiveLocation(Singleton):
         lat = json_data.get('latitude', None)
         lon = json_data.get('longitude', None)
         taxi_number = json_data.get('taxi_number', None)
+        booked = json_data.get('booked', None)
         # TODO: how to check boundary condition here
         if taxi_number in self.taxi_cache:
             key = { 'taxi_number' : taxi_number }
             update_data = { 'location': { 'type': "Point", 'coordinates': [lat, lon] }, 'taxi_number' : taxi_number }
+            if booked is not None:
+                update_data['booked']=booked
             status = Database.get_instance().replace_one(self.collection_name, key, update_data)
             if not self.index_created:
                 Database.get_instance().create_geo_index(self.collection_name, 'location' )
@@ -75,7 +78,8 @@ class LiveLocation(Singleton):
         # Query to exluce cabs that are booked
         if self.boundaryHelper.is_in_service_boundary(latitude, longitude):
             nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 2000)]), 'booked' : {"$not": {"$eq":True}}}
-            return Database.get_instance().get_multiple_data(self.collection_name, nearest_query)
+            # Currently limiting the cab to first 5
+            return Database.get_instance().get_multiple_data(self.collection_name, nearest_query)[:5]
         else:
             print("User is not in the service area")
             return []

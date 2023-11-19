@@ -49,6 +49,8 @@ class BoundaryHelper:
             return False
         if lon < self.min_lon or lat > self.max_lon:
             print("Longitude not in service area: {}-{}".format(lon, (self.min_lon, self.max_lon)))
+            return False
+        return True
         
     def min_max_coordinates(self):
         """

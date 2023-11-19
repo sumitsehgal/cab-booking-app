@@ -80,7 +80,8 @@ def initialize_taxi_location():
         loc_data = {
             'taxi_number' : taxi_number,
             'latitude': new_lat,
-            'longitude' : new_lon
+            'longitude' : new_lon,
+            'booked': False
         }
         send_data_to_server(loc_data)
 
@@ -98,7 +99,7 @@ def update_and_send(taxi):
     loc_data = {
         'taxi_number' : taxi['taxi_number'],
         'latitude' : new_lat,
-        'longitude' : new_lon
+        'longitude' : new_lon,
     }
     send_data_to_server(loc_data)
 
