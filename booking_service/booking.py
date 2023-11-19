@@ -197,6 +197,8 @@ class BookingModel(Singleton):
                 # After 3 mins since no cab was found setting status to No_cabs
             update_data = self._get_status_update(BookingStatus.No_Cabs)
             update_key = self._get_key(booking_id)
+            # Delete the booking from the cache
+            del self._booking_cache[booking_id]
             Database.get_instance().update_single_data(self.collection_name, update_key, update_data)
             return {'booking_id' : booking_id, 'status' : BookingStatus.No_Cabs, 'taxi_alloted' : '', 
                     'user_location' : user_location, 'cab_location' : []}
@@ -244,7 +246,7 @@ class BookingModel(Singleton):
                 update_data = {'taxi_alloted' : taxi_id, 'status' : BookingStatus.Confirm }
                 Database.get_instance().update_single_data(self.collection_name, query_key, update_data)
                 # Mark Taxi as ubooked
-                self.mark_taxi_booked_url(taxi_id)
+                self._mark_taxi_as_booked(taxi_id)
                 return { 'status' : 'Confirmed', 'booking_id' : booking_id, 
                         'user_location' : document['user_location']['coordinates'],
                         'destination' : document['destination']['coordinates']}
