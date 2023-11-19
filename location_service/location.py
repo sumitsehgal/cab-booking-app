@@ -74,12 +74,23 @@ class LiveLocation(Singleton):
         """
         latitude = request_data.get('latitude')
         longitude = request_data.get('longitude')
+        taxi_prefer = request_data.get("taxi_prefer")
         # Query to get all the cabs in 2 km range
         # Query to exluce cabs that are booked
         if self.boundaryHelper.is_in_service_boundary(latitude, longitude):
             nearest_query = {'location': SON([("$near", {'type' :'Point','coordinates' :[latitude, longitude]}), ("$maxDistance", 2000)]), 'booked' : {"$not": {"$eq":True}}}
-            # Currently limiting the cab to first 5
-            return Database.get_instance().get_multiple_data(self.collection_name, nearest_query)[:5]
+            
+            all_taxis = Database.get_instance().get_multiple_data(self.collection_name, nearest_query)
+            if taxi_prefer != "Any":
+                prefer_taxis = []
+                for taxi in all_taxis:
+                    if taxi['taxi_number'] in self.taxi_cache and self.taxi_cache[taxi['taxi_number']]['taxi_type']==taxi_prefer:
+                        prefer_taxis.append(taxi)
+                return prefer_taxis[:5]
+            else:
+                # Currently limiting the cab to first 5
+                return all_taxis[:5]    
+
         else:
             print("User is not in the service area")
             return []

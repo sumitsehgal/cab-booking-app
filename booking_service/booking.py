@@ -31,6 +31,7 @@ class RequestConstant(StrEnum):
     Destination = 'destination'
     User_Id = 'user_id'
     Booking_Id = "booking_id"
+    Taxi_Prefer = "taxi_prefer"
 
 class LiveLocationConstants(StrEnum):
     Latitude = 'latitude'
@@ -43,6 +44,8 @@ class BookingModel(Singleton):
         super().__init__()
         self.collection_name = 'bookings'
         self.live_location_url = "http://localhost:8085/api/v1/find/taxi"
+        self.mark_taxi_booked_url = "http://localhost:8085/api/v1/taxi/booked"
+        self.mark_taxi_free_url = "http://localhost:8085/api/v1/taxi/free"
         self.notify_req =False
         self.start_location='Adayar'
         self.drop_location='Alandur'
@@ -71,9 +74,9 @@ class BookingModel(Singleton):
     def _get_key( self, booking_id):
         return {'booking_id' : booking_id}
     
-    def _query_location_service(self, user_location):
+    def _query_location_service(self, user_location, taxi_prefer):
         logging.info(user_location)
-        req_data = {LiveLocationConstants.Latitude: user_location[0], LiveLocationConstants.Longitude : user_location[1]}
+        req_data = {LiveLocationConstants.Latitude: user_location[0], LiveLocationConstants.Longitude : user_location[1], 'taxi_prefer' : taxi_prefer}
         req_response = requests.post(self.live_location_url, json=req_data)
         # Need Response validation
         if req_response.status_code == 200:
@@ -81,6 +84,23 @@ class BookingModel(Singleton):
         else:
             logging.error("Failed to get nearby taxi: {}".format(req_response.status_code))
             return []
+        
+    def _mark_taxi_as_booked(self, taxi_number):
+        req_data = {'taxi_number' : taxi_number}
+        req_response = requests.post(self.mark_taxi_booked_url, json=req_data)
+        if req_response.status_code == 200:
+            logging.info("Taxi Marked as Booked")
+        else:
+            logging.info("Error in marking taxi as booked")
+
+    def _mark_taxi_as_available(self, taxi_number):
+        req_data = {'taxi_number' : taxi_number}
+        req_response = requests.post(self.mark_taxi_free_url, json=req_data)
+        if req_response.status_code == 200:
+            logging.info("Taxi Marked as Available")
+        else:
+            logging.info("Error in marking taxi as Available")
+
         
     def _send_notofication_to_driver(self, booking_id, cabs,user_location,drop_location):
         logging.info("Send message to notification cache")
@@ -134,8 +154,10 @@ class BookingModel(Singleton):
     def get_nearby_taxis(self, request_data):
         user_location = request_data.get(RequestConstant.User_Location)
         user_id = request_data.get(RequestConstant.User_Id)
+        taxi_prefer = request_data.get(RequestConstant.Taxi_Prefer, "Any")
         logging.info("{}-{}".format(user_id,user_location))
-        documents = self._query_location_service(user_location)
+        
+        documents = self._query_location_service(user_location, taxi_prefer)
         cabs_location = []
         for document in documents:
             taxi_data = document['location']['coordinates']
@@ -149,14 +171,18 @@ class BookingModel(Singleton):
         user_location = request_data.get(RequestConstant.User_Location)
         destination = request_data.get(RequestConstant.Destination)
         user_id = request_data.get(RequestConstant.User_Id)
+        taxi_prefer = request_data.get(RequestConstant.Taxi_Prefer)
         # Querying the cab location again
-        documents = self._query_location_service(user_location)
+        documents = self._query_location_service(user_location, taxi_prefer)
         cabs = []
         cab_location = {}
         for document in documents:
             cabs.append(document['taxi_number'])
             cab_location[document['taxi_number']] = document['location']['coordinates']
-
+        # Siunce there is no cab near user location we don't need to do booking
+        if len(cabs) == 0:
+            return {'booking_id' : "", 'status' : BookingStatus.No_Cabs, 'taxi_alloted' : '', 
+                    'user_location' : user_location, 'cab_location' : []}
         booking_id = user_id +"-" + datetime.datetime.now().strftime("%H-%M-%S")
         booking_data = self._get_new_booking_document(booking_id, user_id, user_location, destination, cabs)
         Database.get_instance().insert_single_data(self.collection_name, booking_data)
@@ -217,6 +243,8 @@ class BookingModel(Singleton):
             if document and document['status']==BookingStatus.User_Confirmed:
                 update_data = {'taxi_alloted' : taxi_id, 'status' : BookingStatus.Confirm }
                 Database.get_instance().update_single_data(self.collection_name, query_key, update_data)
+                # Mark Taxi as ubooked
+                self.mark_taxi_booked_url(taxi_id)
                 return { 'status' : 'Confirmed', 'booking_id' : booking_id, 
                         'user_location' : document['user_location']['coordinates'],
                         'destination' : document['destination']['coordinates']}
