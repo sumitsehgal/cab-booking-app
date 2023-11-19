@@ -13,9 +13,10 @@ struct SearchCabView: View {
     @State private var pickUpLocation: String = "Test Location"
     @State private var destinationLocation: String = "Test Destination"
     @State private var requestBaseUrl: String = "http://localhost:8090/api/v1/"
-    @State private var userId: String = "First Name-65478"
+    @State private var userId: String = "sy@yahoo.com"
     @State private var taxiLocations: [TaxiLocation] = []
     @State private var bookingId: String = ""
+    @State private var taxiType: String = "Mini"
     
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
@@ -32,6 +33,7 @@ struct SearchCabView: View {
     
     @State var userLocation = CLLocationCoordinate2D(latitude: 21.16190157, longitude: 79.08476149)
     
+    @State var dropLocation = CLLocationCoordinate2D(latitude: 21.08246917, longitude: 79.12941825)
     
     
     func bookCabs() {
@@ -48,8 +50,9 @@ struct SearchCabView: View {
         
         let parameters: [String : Any] = [
             "user_id" : userId,
-            "user_location" : [userLocation.latitude,userLocation.latitude],
-            "destination": [13.160277872294213,80.18578008595382]
+            "user_location" : [userLocation.latitude,userLocation.longitude],
+            "destination": [dropLocation.latitude,dropLocation.longitude],
+            "taxi_prefer": taxiType
         ]
         
         var request = URLRequest(url: bookCabs)
@@ -113,7 +116,7 @@ struct SearchCabView: View {
         let parameters: [String: Any] = [
             "user_id": userId,
             "user_location" : [userLocation.latitude,userLocation.longitude],
-            "destination" : [13.160277872294213,80.18578008595382]
+            "destination" : [dropLocation.latitude,dropLocation.longitude]
         ]
 
         // Create the HTTP request
@@ -177,17 +180,25 @@ struct SearchCabView: View {
     var body: some View {
         VStack{
             let locationManager = CLLocationManager()
+            let taxiTypes = ["Mini", "Sedan", "SUV", "Any"]
             Form{
                 TextField(
                     "Pick Up Location",
                     text: $pickUpLocation
-                )
+                ).frame(height: 5)
                 
                 TextField(
                     "Destination",
                     text: $destinationLocation
-                )
+                ).frame(height: 5)
                 
+                Picker("Taxi Type", selection: $taxiType) {
+                    ForEach(taxiTypes, id: \.self) {
+                        Text($0)
+                    }
+                }.pickerStyle(MenuPickerStyle())
+                .padding()
+                .frame(height: 5)
                 
                 Button(action: {
                     // Perform user details update logic here
@@ -201,8 +212,9 @@ struct SearchCabView: View {
                         .cornerRadius(8)
                 }
                 .buttonStyle(DefaultButtonStyle())
+                .frame(height: 5)
                 
-            }.frame(height: 200)
+            }.frame(height: 220)
             
             //Map(initialPosition: .region(region)).frame(height: 500)
             Map(coordinateRegion: $region, showsUserLocation: true,userTrackingMode:.constant(.follow), annotationItems: self.taxiLocations){
