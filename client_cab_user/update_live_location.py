@@ -7,7 +7,58 @@ from concurrent.futures import ThreadPoolExecutor
 import time
 import logging
 
-
+TAXIS = [
+    ['Taxi-11',  21.16107863,    79.08568417],
+    ['Taxi-12',  21.16154888,    79.08598994],
+    ['Taxi-13',  21.16190157,    79.08476149],
+    ['Taxi-14',  21.16199162,    79.08556615],
+    ['Taxi-15',  21.16146133,    79.08536231],
+    ['Taxi-16',  21.16048831,    79.08719694],
+    ['Taxi-17',  21.16095856,    79.08718621],
+    ['Taxi-18',  21.16051832,    79.08672487],
+    ['Taxi-19',  21.16113366,    79.08811425],
+    ['Taxi-110', 21.1606634,     79.08619916],
+    ['Taxi-111', 21.16049956,    79.08445304],
+    ['Taxi-112', 21.16042953,    79.08502703],
+    ['Taxi-113', 21.16050457,    79.08446377],
+    ['Taxi-114', 21.15999679,    79.08435648],
+    ['Taxi-115', 21.15959657,    79.08460056],
+    ['Taxi-116', 21.15913632,    79.08391928],
+    ['Taxi-117', 21.15882115,    79.08406948],
+    ['Taxi-118', 21.15861603,    79.08480172],
+    ['Taxi-119', 21.15948651,    79.08483928],
+    ['Taxi-120', 21.15962659,    79.08434307],
+    ['Taxi-121', 21.15787062,    79.08500021],
+    ['Taxi-122', 21.15723526,    79.08524965],
+    ['Taxi-123', 21.15719524,    79.08479368],
+    ['Taxi-124', 21.15801069,    79.0840212],
+    ['Taxi-125', 21.15678751,    79.08520137],
+    ['Taxi-126', 21.15720524,    79.0833426],
+    ['Taxi-127', 21.1569501,     79.08323531],
+    ['Taxi-128', 21.15683503,    79.08297782],
+    ['Taxi-129', 21.15628472,    79.08344184],
+    ['Taxi-130', 21.15645232,    79.0846998],
+    ['Taxi-131', 21.15679907,    79.06868009],
+    ['Taxi-132', 21.15361723,    79.06829385],
+    ['Taxi-133', 21.15287679,    79.07357244],
+    ['Taxi-134', 21.15675905,    79.07526759],
+    ['Taxi-135', 21.15029524,    79.07455949],
+    ['Taxi-136', 21.15593858,    79.07902269],
+    ['Taxi-137', 21.1527167,     79.0789154],
+    ['Taxi-138', 21.15031525,    79.07951621],
+    ['Taxi-139', 21.15307691,    79.08258466],
+    ['Taxi-140', 21.15257662,    79.076834],
+    ['Taxi-141', 21.12625361,    79.06363753],
+    ['Taxi-142', 21.12120962,    79.05436782],
+    ['Taxi-143', 21.11224212,    79.05668525],
+    ['Taxi-144', 21.10791831,    79.08020286],
+    ['Taxi-145', 21.12913581,    79.07659797],
+    ['Taxi-146', 21.08803916,    79.11895541],
+    ['Taxi-147', 21.08583687,    79.13393287],
+    ['Taxi-148', 21.08996112,    79.12384776],
+    ['Taxi-149', 21.07934995,    79.13187293],
+    ['Taxi-150', 21.08370048,    79.12618887]
+]
 def get_all_taxis():
     req_url = 'http://localhost:8080/api/v1/taxi'
     req_response = requests.get(req_url,timeout=120)
@@ -25,17 +76,9 @@ def send_data_to_server(loc_data):
     print(req_response.json()['Status'])
 
 def initialize_taxi_location():
-    taxis = get_all_taxis()
-    boundary = get_boundary_cordinates()
-    min_lat = boundary['min_latitude']
-    max_lat = boundary['max_latitude']
-    min_lon = boundary['min_longitude']
-    max_lon = boundary['max_longitude']
-    for taxi_number, taxi in taxis.items():
-        new_lat = random.uniform(min_lat, max_lat)
-        new_lon = random.uniform(min_lon, max_lon)
+    for taxi_number, new_lat, new_lon in TAXIS:
         loc_data = {
-            'taxi_number' : taxi['taxi_number'],
+            'taxi_number' : taxi_number,
             'latitude': new_lat,
             'longitude' : new_lon
         }
@@ -100,9 +143,9 @@ def mock_taxi_free_booked():
 
 
 def main():
-    #initialize_taxi_location()
+    initialize_taxi_location()
     #mock_live_update()
-    mock_taxi_free_booked()
+    #mock_taxi_free_booked()
 
 if __name__ == "__main__":
     main()

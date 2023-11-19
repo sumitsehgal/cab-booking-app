@@ -1,26 +1,50 @@
-MH11A1234,Mini,Nagpur,Ali,2020,4,Available,Petrol
-MH11B1234,Mini,Nagpur,John,2021,4,Not Available,Diesel
-MH11C1234,Mini,Nagpur,Rohit,2022,4,Available,Petrol
-MH11D1234,Mini,Nagpur,Rahul,2019,4,Not Available,Petrol
-MH11E1234,Mini,Nagpur,Sam,2020,4,Available,Diesel
-MH11F1234,Sedan,Nagpur,Jay,2021,4,Not Available,Petrol
-MH11G1234,Sedan,Nagpur,Kabir,2022,4,Available,Petrol
-MH11H1234,Sedan,Nagpur,Amar,2018,4,Not Available,Diesel
-MH11I1234,Sedan,Nagpur,Ameer,2023,4,Available,Diesel
-MH11J1234,Sedan,Nagpur,Ajith,2021,4,Not Available,Diesel
-MH11K1234,SUV,Nagpur,David,2018,7,Available,Diesel
-MH11L1234,SUV,Nagpur,Fami,2019,7,Not Available,Diesel
-MH11M1234,SUV,Nagpur,George,2021,7,Available,Diesel
-MH11N1234,SUV,Nagpur,Ram,2022,7,Not Available,Diesel
-MH11O1234,SUV,Nagpur,Victor,2023,7,Available,Diesel
-MH11P1234,SUV,Nagpur,Tom,2020,7,Not Available,Petrol
-MH11Q1234,SUV,Nagpur,Qadir,2022,7,Available,Petrol
-MH11R1234,Mini,Nagpur,Amy,2022,4,Available,Diesel
-MH11S1234,Sedan,Nagpur,Niyas,2020,4,Available,Petrol
-MH11T1234,SUV,Nagpur,Riyaz,2018,7,Available,Diesel
-MH11U1234,Mini,Nagpur,John,2019,4,Available,Petrol
-MH11V1234,Sedan,Nagpur,Jane,2023,4,Available,Diesel
-MH11W1234,SUV,Nagpur,Raghu,2022,7,Available,Petrol
-MH11X1234,Mini,Nagpur,Selva,2018,4,Available,Petrol
-MH11Y1234,Sedan,Nagpur,Koti,2019,4,Available,Diesel
-MH11Z1234,SUV,Nagpur,Stephen,2021,7,Available,Petrol
+Taxi-11,Mini,Nagpur,driver-1@gmail.com,2020,4,Available,Petrol
+Taxi-12,Mini,Nagpur,driver-2@gmail.com,2021,4,Available,Diesel
+Taxi-13,Mini,Nagpur,driver-3@gmail.com,2022,4,Available,Petrol
+Taxi-14,Mini,Nagpur,driver-4@gmail.com,2019,4,Available,Petrol
+Taxi-15,Mini,Nagpur,driver-5@gmail.com,2020,4,Available,Diesel
+Taxi-16,Sedan,Nagpur,driver-6@gmail.com,2021,4,Available,Petrol
+Taxi-17,Sedan,Nagpur,driver-7@gmail.com,2022,4,Available,Petrol
+Taxi-18,Sedan,Nagpur,driver-8@gmail.com,2018,4,Available,Diesel
+Taxi-19,Sedan,Nagpur,driver-9@gmail.com,2023,4,Available,Diesel
+Taxi-110,Sedan,Nagpur,driver-10@gmail.com,2021,4,Available,Diesel
+Taxi-111,SUV,Nagpur,driver-11@gmail.com,2018,7,Available,Diesel
+Taxi-112,SUV,Nagpur,driver-12@gmail.com,2019,7,Available,Diesel
+Taxi-113,SUV,Nagpur,driver-13@gmail.com,2021,7,Available,Diesel
+Taxi-114,SUV,Nagpur,driver-14@gmail.com,2022,7,Available,Diesel
+Taxi-115,SUV,Nagpur,driver-15@gmail.com,2023,7,Available,Diesel
+Taxi-116,SUV,Nagpur,driver-16@gmail.com,2020,7,Available,Petrol
+Taxi-117,SUV,Nagpur,driver-17@gmail.com,2022,7,Available,Petrol
+Taxi-118,Mini,Nagpur,driver-18@gmail.com,2022,4,Available,Diesel
+Taxi-119,Sedan,Nagpur,driver-19@gmail.com,2020,4,Available,Petrol
+Taxi-120,SUV,Nagpur,driver-20@gmail.com,2018,7,Available,Diesel
+Taxi-121,Mini,Nagpur,driver-21@gmail.com,2019,4,Available,Petrol
+Taxi-122,Sedan,Nagpur,driver-22@gmail.com,2023,4,Available,Diesel
+Taxi-123,SUV,Nagpur,driver-23@gmail.com,2022,7,Available,Petrol
+Taxi-124,Mini,Nagpur,driver-24@gmail.com,2018,4,Available,Petrol
+Taxi-125,Sedan,Nagpur,driver-25@gmail.com,2019,4,Available,Diesel
+Taxi-126,SUV,Nagpur,driver-26@gmail.com,2021,7,Available,Petrol
+Taxi-127,Mini,Nagpur,driver-27@gmail.com,2020,4,Available,Petrol
+Taxi-128,Mini,Nagpur,driver-28@gmail.com,2021,4,Available,Diesel
+Taxi-129,Mini,Nagpur,driver-29@gmail.com,2022,4,Available,Petrol
+Taxi-130,Mini,Nagpur,driver-30@gmail.com,2019,4,Available,Petrol
+Taxi-131,Mini,Nagpur,driver-31@gmail.com,2020,4,Available,Diesel
+Taxi-132,Sedan,Nagpur,driver-32@gmail.com,2021,4,Available,Petrol
+Taxi-133,Sedan,Nagpur,driver-33@gmail.com,2022,4,Available,Petrol
+Taxi-134,Sedan,Nagpur,driver-34@gmail.com,2018,4,Available,Diesel
+Taxi-135,Sedan,Nagpur,driver-35@gmail.com,2023,4,Available,Diesel
+Taxi-136,Sedan,Nagpur,driver-36@gmail.com,2021,4,Available,Diesel
+Taxi-137,SUV,Nagpur,driver-37@gmail.com,2018,7,Available,Diesel
+Taxi-138,SUV,Nagpur,driver-38@gmail.com,2019,7,Available,Diesel
+Taxi-139,SUV,Nagpur,driver-39@gmail.com,2021,7,Available,Diesel
+Taxi-140,SUV,Nagpur,driver-40@gmail.com,2022,7,Available,Diesel
+Taxi-141,SUV,Nagpur,driver-41@gmail.com,2023,7,Available,Diesel
+Taxi-142,SUV,Nagpur,driver-42@gmail.com,2020,7,Available,Petrol
+Taxi-143,SUV,Nagpur,driver-43@gmail.com,2022,7,Available,Petrol
+Taxi-144,Mini,Nagpur,driver-44@gmail.com,2022,4,Available,Diesel
+Taxi-145,Sedan,Nagpur,driver-45@gmail.com,2020,4,Available,Petrol
+Taxi-146,SUV,Nagpur,driver-46@gmail.com,2018,7,Available,Diesel
+Taxi-147,Mini,Nagpur,driver-47@gmail.com,2019,4,Available,Petrol
+Taxi-148,Sedan,Nagpur,driver-48@gmail.com,2023,4,Available,Diesel
+Taxi-149,SUV,Nagpur,driver-49@gmail.com,2022,7,Available,Petrol
+Taxi-150,Mini,Nagpur,driver-50@gmail.com,2018,4,Available,Petrol

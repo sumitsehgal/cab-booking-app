@@ -30,20 +30,30 @@ class BoundaryHelper:
         return transform(project, buf).exterior.coords[:]
     
     def set_min_max_for_service(self):
+        """
+        Set min and max latitude and logitude for the given service area
+        """
         self.min_lat = min(self._service_area, key=lambda i:i[1])[1]
         self.min_lon = min(self._service_area, key=lambda i:i[0])[0]
         self.max_lat = max(self._service_area, key=lambda i: i[1])[1]
         self.max_lon = max(self._service_area, key=lambda i: i[0])[0]
 
-    def is_in_service_boundary(self, lan, lon):
+    def is_in_service_boundary(self, lat, lon):
+        """
+        function to check if the lattitude and longitude is in the boundary
+        """
         # This needs to return True if the lan and lon is in service area
         # False if lan and lon is outside service area
-        if( (lan,lon) in self._service_area):
-            return True
-        else:
+        if lat < self.min_lat or lat > self.max_lat:
+            print("Lattitude not in service area: {}-{}".format(lat, (self.min_lat, self.max_lat)))
             return False
+        if lon < self.min_lon or lat > self.max_lon:
+            print("Longitude not in service area: {}-{}".format(lon, (self.min_lon, self.max_lon)))
         
     def min_max_coordinates(self):
+        """
+        function to return 
+        """
         return { 'min_latitude' : self.min_lat, 
                  'max_latitude' : self.max_lat,
                  'min_longitude' : self.min_lon, 
