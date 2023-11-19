@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 
+
 struct SearchCabView: View {
     @State private var pickUpLocation: String = "Test Location"
     @State private var destinationLocation: String = "Test Destination"
@@ -24,12 +25,12 @@ struct SearchCabView: View {
     @State private var taxiLocation: [Double] = []
     
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 21.169676702877396, longitude: 78.97251758689261),
-        span: MKCoordinateSpan(latitudeDelta:0.1, longitudeDelta:0.1)
+        center: CLLocationCoordinate2D(latitude: 21.16190157, longitude: 79.08476149),
+        span: MKCoordinateSpan(latitudeDelta:0.005, longitudeDelta:0.005)
     )
     
     
-    @State var userLocation = CLLocationCoordinate2D(latitude: 21.169676702877396, longitude: 78.97251758689261)
+    @State var userLocation = CLLocationCoordinate2D(latitude: 21.16190157, longitude: 79.08476149)
     
     
     
@@ -47,7 +48,7 @@ struct SearchCabView: View {
         
         let parameters: [String : Any] = [
             "user_id" : userId,
-            "user_location" : [21.169676702877396,78.97251758689261],
+            "user_location" : [userLocation.latitude,userLocation.latitude],
             "destination": [13.160277872294213,80.18578008595382]
         ]
         
@@ -111,7 +112,7 @@ struct SearchCabView: View {
         // Create update user details parameters
         let parameters: [String: Any] = [
             "user_id": userId,
-            "user_location" : [21.169676702877396,78.97251758689261],
+            "user_location" : [userLocation.latitude,userLocation.longitude],
             "destination" : [13.160277872294213,80.18578008595382]
         ]
 

@@ -51,7 +51,7 @@ struct DriverScreenTripView: View {
     @State private var message: String = ""
     
     // Ideally this will be set by profile
-    @State private var taxiId: String = "Taxi-11"
+    @State private var taxiId: String = "Taxi-135"
     @State private var baseUrl: String = "http://localhost:8090/api/v1/"
 
     
